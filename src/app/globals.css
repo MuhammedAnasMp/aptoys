@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
+@theme {
+  --color-space-black: #0B0F19;
+  --color-neon-purple: #A855F7;
+  --color-electric-blue: #3B82F6;
+  --color-glow-pink: #EC4899;
+  
+  --background-space-black: #0B0F19;
+  --foreground-white: #ffffff;
+  
+  --font-outfit: "Outfit", sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0B0F19;
+  --foreground: #ffffff;
+  --neon-glow-primary: 0 0 20px rgba(168, 85, 247, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply font-sans antialiased;
+    overflow-x: hidden;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .glass-card {
+    @apply bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] rounded-3xl transition-all duration-300;
+  }
+  
+  .glass-card-hover {
+    @apply hover:bg-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.2)] hover:shadow-2xl transition-all duration-500;
+  }
+
+  .neon-text {
+    @apply text-neon-purple drop-shadow-[0_0_8px_rgba(168,85,247,0.6)];
+  }
+
+  .neon-button {
+    @apply flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300;
+    background: linear-gradient(90deg, #A855F7, #3B82F6);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+  }
+
+  .neon-button:hover {
+    @apply scale-105;
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+  }
+}
+
+/* Custom Scrollbar for 2050 feel */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B0F19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #A855F7, #3B82F6);
+  border-radius: 10px;
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
