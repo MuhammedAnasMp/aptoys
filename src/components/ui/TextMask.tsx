@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
+import { useSiteMedia } from '@/hooks/useSiteMedia';
 
 interface TextMaskProps {
     text: string;
@@ -9,7 +10,8 @@ interface TextMaskProps {
     className?: string;
 }
 
-export default function TextMask({ text, backgroundImage, className = "" }: TextMaskProps) {
+export default function TextMask({ text, backgroundImage: defaultImage, className = "" }: TextMaskProps) {
+    const { mediaUrl: backgroundImage } = useSiteMedia('shop_text_mask', defaultImage);
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Motion values for mouse position

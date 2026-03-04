@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProductCard from "@/components/home/ProductCard";
 import { FiFilter, FiChevronDown, FiX, FiCheck } from "react-icons/fi";
 import TextMask from "@/components/ui/TextMask";
+import { useSiteMedia } from "@/hooks/useSiteMedia";
 
 interface Category {
     id: string;
@@ -38,6 +39,7 @@ export default function ShopPage() {
     const [sortBy, setSortBy] = useState<string>("newest");
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [showSortMenu, setShowSortMenu] = useState(false);
+    const { mediaUrl: maskImage } = useSiteMedia('shop_text_mask', '');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -88,7 +90,7 @@ export default function ShopPage() {
                         <span className="text-neon-purple text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block underline-glow">The Shop</span>
                         <TextMask
                             text="The Collection."
-                            backgroundImage="https://images.steamusercontent.com/ugc/12652242602692128934/16356F5D52683D1986FE2902BB34FB08BC7232E1/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
+                            backgroundImage={maskImage}
                             className="text-5xl md:text-8xl lg:text-9xl"
                         />
                     </div>

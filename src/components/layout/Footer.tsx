@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaInstagram, FaFacebook, FaGlobe } from "react-icons/fa";
+import WhatsAppCTA from "./WhatsAppCTA";
 
 export default function Footer() {
     return (
@@ -17,13 +18,13 @@ export default function Footer() {
                         Future Wellness. Private. Premium. Next-generation wellness tech brand for the modern explorer.
                     </p>
                     <div className="flex gap-4">
-                        <Link href="https://instagram.com/adultplaytoys.instagram" className="w-10 h-10 glass-card flex items-center justify-center hover:text-neon-purple transition-colors">
+                        <Link href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || "#"} className="w-10 h-10 glass-card flex items-center justify-center hover:text-neon-purple transition-colors">
                             <FaInstagram size={18} />
                         </Link>
-                        <Link href="https://facebook.com/adultplaytoys.facebook" className="w-10 h-10 glass-card flex items-center justify-center hover:text-neon-purple transition-colors">
+                        <Link href={process.env.NEXT_PUBLIC_FACEBOOK_URL || "#"} className="w-10 h-10 glass-card flex items-center justify-center hover:text-neon-purple transition-colors">
                             <FaFacebook size={18} />
                         </Link>
-                        <Link href="https://placehosted.com/@adultplaytoys.placehosted" className="w-10 h-10 glass-card flex items-center justify-center hover:text-neon-purple transition-colors">
+                        <Link href={process.env.NEXT_PUBLIC_GLOBE_URL || "#"} className="w-10 h-10 glass-card flex items-center justify-center hover:text-neon-purple transition-colors">
                             <FaGlobe size={18} />
                         </Link>
                     </div>
@@ -34,7 +35,7 @@ export default function Footer() {
                     <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Shop</h4>
                     <ul className="space-y-4">
                         {["New Arrivals", "Trending", "Famous Products", "Categories", "Sale"].map(link => (
-                            <li key={link}><Link href="#" className="text-white/50 hover:text-neon-purple text-sm transition-colors">{link}</Link></li>
+                            <li key={link}><Link href="/shop" className="text-white/50 hover:text-neon-purple text-sm transition-colors">{link}</Link></li>
                         ))}
                     </ul>
                 </div>
@@ -42,8 +43,9 @@ export default function Footer() {
                 <div>
                     <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Resources</h4>
                     <ul className="space-y-4">
+                        <li><Link href="/philosophy" className="text-white/50 hover:text-neon-purple text-sm transition-colors">Philosophy</Link></li>
                         {["Wellness Guide", "Blog", "Community", "FAQ", "Privacy Policy"].map(link => (
-                            <li key={link}><Link href="#" className="text-white/50 hover:text-neon-purple text-sm transition-colors">{link}</Link></li>
+                            <li key={link}><Link href={link === "Blog" ? "/blog" : link === "FAQ" ? "/faq" : link === "Community" ? "/community" : "#"} className="text-white/50 hover:text-neon-purple text-sm transition-colors">{link}</Link></li>
                         ))}
                     </ul>
                 </div>
@@ -52,9 +54,9 @@ export default function Footer() {
                     <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Support</h4>
                     <p className="text-white/50 text-sm mb-4">Discreet Delivery Guaranteed.</p>
                     <p className="text-white/50 text-sm mb-6">Available 24/7 for wellness enquiries.</p>
-                    <Link href="https://wa.me/919876543210" className="neon-button text-xs py-3">
-                        WhatsApp Support
-                    </Link>
+                    <div className="max-w-[160px] h-11">
+                        <WhatsAppCTA variant="inline" />
+                    </div>
                 </div>
             </div>
 

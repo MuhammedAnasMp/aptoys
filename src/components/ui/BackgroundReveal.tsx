@@ -2,12 +2,14 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
+import { useSiteMedia } from '@/hooks/useSiteMedia';
 
 interface BackgroundRevealProps {
     backgroundImage: string;
 }
 
-export default function BackgroundReveal({ backgroundImage }: BackgroundRevealProps) {
+export default function BackgroundReveal({ backgroundImage: defaultImage }: BackgroundRevealProps) {
+    const { mediaUrl: backgroundImage } = useSiteMedia('home_bg_mask', defaultImage);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -49,7 +51,7 @@ export default function BackgroundReveal({ backgroundImage }: BackgroundRevealPr
 
     const maskImage = useTransform(
         [springX, springY],
-        ([x, y]) => `radial-gradient(circle 250px at ${x}px ${y}px, black 0%, transparent 80%)`
+        ([x, y]) => `radial-gradient(circle 200px at ${x}px ${y}px, black 0%, transparent 80%)`
     );
 
     return (

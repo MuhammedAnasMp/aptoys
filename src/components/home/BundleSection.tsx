@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { FiArrowRight, FiPercent, FiPackage } from "react-icons/fi";
+import { AnimatePresence } from "framer-motion";
 
 interface Bundle {
     id: string;
@@ -16,6 +17,7 @@ interface Bundle {
     image: string;
     items: {
         product_name: string;
+        product_image: string;
         quantity: number;
     }[];
 }
@@ -23,6 +25,7 @@ interface Bundle {
 export default function BundleSection() {
     const [bundles, setBundles] = useState<Bundle[]>([]);
     const [loading, setLoading] = useState(true);
+    const [currentImageIndices, setCurrentImageIndices] = useState<Record<string, number>>({});
 
     useEffect(() => {
         const fetchBundles = async () => {
@@ -30,6 +33,11 @@ export default function BundleSection() {
                 const response = await fetch("http://localhost:8001/api/bundles/");
                 const data = await response.json();
                 setBundles(data);
+
+                // Initialize indices
+                const indices: Record<string, number> = {};
+                data.forEach((b: Bundle) => indices[b.id] = 0);
+                setCurrentImageIndices(indices);
             } catch (error) {
                 console.error("Error fetching bundles:", error);
             } finally {
@@ -38,6 +46,26 @@ export default function BundleSection() {
         };
         fetchBundles();
     }, []);
+
+    // Auto-slide logic for bundles
+    useEffect(() => {
+        if (bundles.length === 0) return;
+
+        const interval = setInterval(() => {
+            setCurrentImageIndices((prev) => {
+                const next = { ...prev };
+                bundles.forEach((bundle) => {
+                    const media = [bundle.image, ...bundle.items.map(item => item.product_image)].filter(Boolean);
+                    if (media.length > 1) {
+                        next[bundle.id] = (prev[bundle.id] + 1) % media.length;
+                    }
+                });
+                return next;
+            });
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [bundles]);
 
     if (loading || bundles.length === 0) return null;
 
@@ -110,19 +138,51 @@ export default function BundleSection() {
                                     href={`/bundles/${bundle.slug}`}
                                     className="w-full md:w-48 aspect-square relative rounded-2xl overflow-hidden bg-white/5"
                                 >
-                                    {bundle.image ? (
-                                        <Image
-                                            src={bundle.image}
-                                            alt={bundle.name}
-                                            fill
-                                            className="object-cover group-hover:scale-110 transition-transform duration-700"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full flex flex-col items-center justify-center text-white/10">
-                                            <FiPackage size={40} />
-                                            <span className="text-[10px] font-bold uppercase tracking-widest mt-2">Bundle Pack</span>
-                                        </div>
-                                    )}
+                                    <AnimatePresence mode="wait">
+                                        {(() => {
+                                            const media = [bundle.image, ...bundle.items.map(item => item.product_image)].filter(Boolean);
+                                            const currentIndex = currentImageIndices[bundle.id] || 0;
+                                            const currentItem = media[currentIndex];
+                                            const isVideo = currentItem?.match(/\.(mp4|webm|ogg)$/i);
+
+                                            if (media.length > 0) {
+                                                return (
+                                                    <motion.div
+                                                        key={currentItem}
+                                                        initial={{ opacity: 0 }}
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
+                                                        transition={{ duration: 0.8 }}
+                                                        className="absolute inset-0"
+                                                    >
+                                                        {isVideo ? (
+                                                            <video
+                                                                src={currentItem}
+                                                                autoPlay
+                                                                muted
+                                                                loop
+                                                                playsInline
+                                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                            />
+                                                        ) : (
+                                                            <Image
+                                                                src={currentItem}
+                                                                alt={bundle.name}
+                                                                fill
+                                                                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                                            />
+                                                        )}
+                                                    </motion.div>
+                                                );
+                                            }
+                                            return (
+                                                <div className="w-full h-full flex flex-col items-center justify-center text-white/10">
+                                                    <FiPackage size={40} />
+                                                    <span className="text-[10px] font-bold uppercase tracking-widest mt-2">Bundle Pack</span>
+                                                </div>
+                                            );
+                                        })()}
+                                    </AnimatePresence>
                                 </Link>
                             </div>
                         </motion.div>

@@ -1,14 +1,19 @@
+"use client";
+
 import Hero from "@/components/home/Hero";
 import Categories from "@/components/home/Categories";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import SocialProofToast from "@/components/home/SocialProofToast";
 import BundleSection from "@/components/home/BundleSection";
 import BackgroundReveal from "@/components/ui/BackgroundReveal";
+import { useSiteMedia } from "@/hooks/useSiteMedia";
 
 export default function Home() {
+  const { mediaUrl: backgroundImage } = useSiteMedia('home_bg_mask', '');
+
   return (
     <div className="relative overflow-hidden">
-      <BackgroundReveal backgroundImage="https://wallpapers-clan.com/wp-content/uploads/2025/07/cute-cat-peeking-big-eyes-desktop-wallpaper-cover.jpg" />
+      <BackgroundReveal backgroundImage={backgroundImage} />
       <Hero />
       <SocialProofToast />
       <BundleSection />

@@ -36,7 +36,7 @@ export default function WishlistPage() {
                 const response = await fetch("http://localhost:8001/api/products/");
                 const data = await response.json();
                 // Filter all products to only show liked ones
-                const likedProducts = data.filter((p: Product) => likedIds.includes(p.id.toString()));
+                const likedProducts = data.filter((p: Product) => likedIds.map(String).includes(p.id.toString()));
                 setWishlist(likedProducts);
             } catch (error) {
                 console.error("Error fetching wishlist products:", error);

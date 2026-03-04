@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { FiShoppingCart, FiHeart, FiEye } from "react-icons/fi";
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 interface ProductCardProps {
     product: {
@@ -15,6 +15,7 @@ interface ProductCardProps {
         price: string;
         discount_price?: string;
         image: string;
+        images?: { file: string; is_primary: boolean; media_type?: string }[];
         sales_count: number;
         rating: number;
         is_famous?: boolean;
@@ -26,12 +27,37 @@ export default function ProductCard({ product }: ProductCardProps) {
     const router = useRouter();
     const [isHovered, setIsHovered] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { addToCart } = useCart();
 
     useEffect(() => {
         const likedItems = JSON.parse(localStorage.getItem("adlply_wishlist") || "[]");
-        setIsLiked(likedItems.includes(product.id));
+        setIsLiked(likedItems.map(String).includes(String(product.id)));
     }, [product.id]);
+
+    // Auto-slide logic
+    const allMedia = useMemo(() => {
+        if (product.images && product.images.length > 0) {
+            return product.images.map(img => ({
+                url: img.file,
+                type: img.media_type || (img.file.match(/\.(mp4|webm|ogg)$/i) ? 'video' : 'image')
+            }));
+        }
+        return product.image ? [{
+            url: product.image,
+            type: product.image.match(/\.(mp4|webm|ogg)$/i) ? 'video' : 'image'
+        }] : [];
+    }, [product.images, product.image]);
+
+    useEffect(() => {
+        if (allMedia.length <= 1) return;
+
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prev) => (prev + 1) % allMedia.length);
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [allMedia]);
 
     const toggleLike = async (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -39,9 +65,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         let newItems;
 
         if (isLiked) {
-            newItems = likedItems.filter((id: string) => id !== product.id);
+            newItems = likedItems.filter((id: any) => String(id) !== String(product.id));
         } else {
-            newItems = [...likedItems, product.id];
+            newItems = [...likedItems, String(product.id)];
             try {
                 await fetch('http://localhost:8001/api/wishlist/', {
                     method: 'POST',
@@ -114,18 +140,40 @@ export default function ProductCard({ product }: ProductCardProps) {
 
                 {/* Image Container */}
                 <div className="relative aspect-square rounded-2xl overflow-hidden mb-6 bg-white/5">
-                    {product.image && product.image !== "" ? (
-                        <Image
-                            src={product.image}
-                            alt={product.name}
-                            fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                    ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-white/5">
-                            <span className="text-[10px] text-white/10 uppercase tracking-widest font-bold font-mono">No Image</span>
-                        </div>
-                    )}
+                    <AnimatePresence mode="wait">
+                        {allMedia.length > 0 ? (
+                            <motion.div
+                                key={currentImageIndex}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="absolute inset-0"
+                            >
+                                {allMedia[currentImageIndex].type === 'video' ? (
+                                    <video
+                                        src={allMedia[currentImageIndex].url}
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                ) : (
+                                    <Image
+                                        src={allMedia[currentImageIndex].url}
+                                        alt={product.name}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                )}
+                            </motion.div>
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-white/5">
+                                <span className="text-[10px] text-white/10 uppercase tracking-widest font-bold font-mono">No Image</span>
+                            </div>
+                        )}
+                    </AnimatePresence>
                     {/* Quick Actions */}
                     <div className={`absolute inset-0 bg-space-black/40 backdrop-blur-sm flex items-center justify-center gap-4 transition-all duration-300 ${isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
                         <button

@@ -6,50 +6,72 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiStar, FiShoppingBag, FiShield, FiTruck, FiRefreshCw, FiChevronDown, FiPlay, FiHeart, FiShare2, FiArrowRight } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import WhatsAppCTA from "@/components/layout/WhatsAppCTA";
 
-// Mock data (Enhanced for Multi-Media & Reviews)
-const products = {
-    "nebula-pulse": {
-        id: "101",
-        name: "Nebula Pulse Massager",
-        price: "4,999",
-        originalPrice: "6,999",
-        rating: 4.9,
-        reviewsCount: 124,
-        salesCount: 3450,
-        customerCount: 12000,
-        media: [
-            { id: 1, type: "image", url: "https://i.ibb.co/VvRLrXn/mock-product-1.jpg" },
-            { id: 2, type: "gif", url: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJndzZncWpndzZncWpndzZncWpndzZncWpndzZncWpndzZncWpndzZncCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKMGpxP5O5-tF28/giphy.gif" },
-            { id: 3, type: "video", url: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" },
-        ],
-        trending: true,
-        description: "Experience the next generation of wellness with the Nebula Pulse. Designed for those who demand the finest in personal tech, this device combines ultrasonic vibration with ergonomic 2050 design aesthetics.",
-        benefits: [
-            { title: "Ultra Discreet", detail: "Whisper-quiet motor technology (<20dB) for total privacy." },
-            { title: "Space-Grade Material", detail: "Hypoallergenic medical silicone with a silk-touch finish." },
-            { title: "Smart Sync", detail: "Adaptive vibration patterns that respond to your body." },
-        ],
-        reviews: [
-            { id: 1, author: "Rahul S.", rating: 5, comment: "The future of wellness is truly here. Incredible discretion and build quality.", verified: true, date: "2 days ago" },
-            { id: 2, author: "Ananya K.", rating: 4, comment: "Very impressed with the soft-touch material. The packaging was completely unmarked.", verified: true, date: "1 week ago" },
-            { id: 3, author: "Vikram M.", rating: 5, comment: "Finally a brand that understands aesthetic and performance. 10/10.", verified: true, date: "3 weeks ago" },
-        ]
-    }
-};
+interface Product {
+    id: string;
+    name: string;
+    description: string;
+    price: string;
+    discount_price?: string;
+    rating: number;
+    sales_count: number;
+    customer_count: number;
+    is_trending: boolean;
+    benefits: { title: string; detail: string; }[];
+    images: { id: number; file: string; media_type: string; }[];
+    reviews: { id: number; author: string; rating: number; comment: string; is_verified: boolean; created_at: string; }[];
+}
 
 export default function ProductDetails() {
     const params = useParams();
     const slug = params.slug as string;
-    const product = products[slug as keyof typeof products] || products["nebula-pulse"];
-
+    const [product, setProduct] = useState<Product | null>(null);
+    const [loading, setLoading] = useState(true);
     const [selectedMedia, setSelectedMedia] = useState(0);
     const [activeTab, setActiveTab] = useState(0);
     const { addToCart } = useCart();
     const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await fetch(`http://localhost:8001/api/products/${slug}/`);
+                if (!response.ok) throw new Error("Product not found");
+                const data = await response.json();
+                setProduct(data);
+            } catch (error) {
+                console.error("Error fetching product:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        if (slug) fetchProduct();
+    }, [slug]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="w-12 h-12 border-4 border-neon-purple border-t-transparent rounded-full animate-spin" />
+            </div>
+        );
+    }
+
+    if (!product) {
+        return (
+            <div className="min-h-screen flex items-center justify-center text-white/50">
+                Product not found
+            </div>
+        );
+    }
+
+    const mediaItems = product.images.map(img => ({
+        id: img.id,
+        type: img.media_type,
+        url: img.file
+    }));
 
     return (
         <div className="min-h-screen pb-24">
@@ -70,23 +92,23 @@ export default function ProductDetails() {
                                 exit={{ opacity: 0 }}
                                 className="w-full h-full"
                             >
-                                {product.media[selectedMedia].type === "video" ? (
+                                {mediaItems.length > 0 && mediaItems[selectedMedia].type === "video" ? (
                                     <video
                                         ref={videoRef}
-                                        src={product.media[selectedMedia].url}
+                                        src={mediaItems[selectedMedia].url}
                                         autoPlay
                                         muted
                                         loop
                                         controls
                                         className="w-full h-full object-cover"
                                     />
-                                ) : (product.media[selectedMedia].url && product.media[selectedMedia].url !== "") ? (
+                                ) : (mediaItems.length > 0 && mediaItems[selectedMedia].url && mediaItems[selectedMedia].url !== "") ? (
                                     <Image
-                                        src={product.media[selectedMedia].url}
+                                        src={mediaItems[selectedMedia].url}
                                         alt={product.name}
                                         fill
                                         className="object-cover"
-                                        unoptimized={product.media[selectedMedia].type === "gif"}
+                                        unoptimized={mediaItems[selectedMedia].type === "gif"}
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center bg-white/5">
@@ -98,7 +120,7 @@ export default function ProductDetails() {
                     </motion.div>
 
                     <div className="flex gap-4 mt-6">
-                        {product.media.map((item, i) => (
+                        {mediaItems.map((item, i) => (
                             <button
                                 key={item.id}
                                 onClick={() => setSelectedMedia(i)}
@@ -136,7 +158,7 @@ export default function ProductDetails() {
                         transition={{ delay: 0.2 }}
                     >
                         <div className="flex items-center gap-3 mb-4">
-                            {product.trending && (
+                            {product.is_trending && (
                                 <span className="bg-electric-blue/20 text-electric-blue text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-electric-blue/30">
                                     Trending in India
                                 </span>
@@ -151,18 +173,24 @@ export default function ProductDetails() {
                         <div className="flex items-center gap-6 mb-8">
                             <div className="flex items-center gap-1 text-neon-purple">
                                 {[1, 2, 3, 4, 5].map(i => <FiStar key={i} fill={i <= Math.floor(product.rating) ? "currentColor" : "none"} />)}
-                                <span className="text-white/40 text-xs ml-2">({product.reviewsCount} reviews)</span>
+                                <span className="text-white/40 text-xs ml-2">({product.reviews.length} reviews)</span>
                             </div>
                             <div className="h-4 w-[1px] bg-white/10" />
                             <div className="text-white/40 text-[10px] font-bold uppercase tracking-widest">
-                                <span className="text-glow-pink">{product.salesCount}+</span> Units Sold
+                                <span className="text-glow-pink">{product.sales_count}+</span> Units Sold
                             </div>
                         </div>
 
                         <div className="flex items-end gap-4 mb-10">
                             <span className="text-4xl font-black text-white">₹{product.price}</span>
-                            <span className="text-white/30 line-through text-lg mb-1">₹{product.originalPrice}</span>
-                            <span className="text-glow-pink text-sm font-bold mb-1">Save ₹2,000</span>
+                            {product.discount_price && (
+                                <>
+                                    <span className="text-white/30 line-through text-lg mb-1">₹{product.discount_price}</span>
+                                    <span className="text-glow-pink text-sm font-bold mb-1">
+                                        Save ₹{(parseFloat(product.discount_price) - parseFloat(product.price)).toLocaleString()}
+                                    </span>
+                                </>
+                            )}
                         </div>
 
                         <p className="text-white/50 leading-relaxed mb-10">
@@ -196,35 +224,16 @@ export default function ProductDetails() {
                                     id: product.id,
                                     name: product.name,
                                     price: product.price,
-                                    image: (product as any).media?.[0]?.url || "",
+                                    image: mediaItems?.[0]?.url || "",
                                     slug: slug
                                 })}
                                 className="neon-button h-14 w-full text-sm"
                             >
                                 <FiShoppingBag className="mr-2" /> Add to Cart
                             </button>
-                            <button
-                                onClick={async () => {
-                                    // 1. Log to backend
-                                    try {
-                                        await fetch("http://localhost:8001/api/cart-inquiries/", {
-                                            method: "POST",
-                                            headers: { "Content-Type": "application/json" },
-                                            body: JSON.stringify({
-                                                items_data: [{ name: product.name, quantity: 1, price: product.price }],
-                                                total_price: product.price
-                                            })
-                                        });
-                                    } catch (err) {
-                                        console.error("Failed to log inquiry", err);
-                                    }
-                                    // 2. Open WhatsApp
-                                    window.open(`https://wa.me/919876543210?text=I'd like to enquire about ${product.name} (ID: ${product.id})`, "_blank");
-                                }}
-                                className="flex items-center justify-center gap-2 h-14 w-full glass-card hover:bg-[#25D366] hover:text-white transition-all text-[#25D366] font-bold"
-                            >
-                                <FaWhatsapp size={20} /> Order via WhatsApp
-                            </button>
+                            <div className="h-14 w-full">
+                                <WhatsAppCTA productName={product.name} productId={product.id} variant="inline" />
+                            </div>
                         </div>
 
                         {/* Trust Badges */}
@@ -267,7 +276,7 @@ export default function ProductDetails() {
                                 <div className="flex items-center gap-1 text-neon-purple text-xs">
                                     {[1, 2, 3, 4, 5].map(i => <FiStar key={i} fill={i <= review.rating ? "currentColor" : "none"} />)}
                                 </div>
-                                <span className="text-white/20 text-[10px] font-bold uppercase tracking-widest">{review.date}</span>
+                                <span className="text-white/20 text-[10px] font-bold uppercase tracking-widest">{new Date(review.created_at).toLocaleDateString()}</span>
                             </div>
                             <p className="text-white/60 text-sm leading-relaxed italic mb-8 flex-grow">
                                 "{review.comment}"
@@ -275,7 +284,7 @@ export default function ProductDetails() {
                             <div className="flex items-center justify-between border-t border-white/5 pt-6 mt-auto">
                                 <div>
                                     <p className="text-xs font-black text-white uppercase tracking-widest mb-1">{review.author}</p>
-                                    {review.verified && (
+                                    {review.is_verified && (
                                         <p className="text-[8px] text-electric-blue font-bold uppercase tracking-widest flex items-center gap-1">
                                             <span className="w-1.5 h-1.5 rounded-full bg-electric-blue" /> Verified Buyer
                                         </p>
@@ -291,7 +300,7 @@ export default function ProductDetails() {
 
                 <div className="mt-12 text-center">
                     <button className="text-[10px] uppercase tracking-[0.4em] font-black text-white/30 hover:text-neon-purple transition-all underline outline-offset-8">
-                        Read All {product.reviewsCount} Reviews
+                        Read All {product.reviews.length} Reviews
                     </button>
                 </div>
             </section>
