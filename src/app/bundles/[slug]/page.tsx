@@ -181,7 +181,7 @@ export default function BundleDetails() {
                                         console.error("Failed to log inquiry", err);
                                     }
                                     // 2. Open WhatsApp
-                                    window.open(`https://wa.me/919876543210?text=I'd like to enquire about the bundle: ${bundle.name}`, "_blank");
+                                    window.open(`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919876543210'}?text=I'd like to enquire about the bundle: ${bundle.name}`, "_blank");
                                 }}
                                 className="flex items-center justify-center gap-2 h-14 w-full glass-card hover:bg-[#25D366] hover:text-white transition-all text-[#25D366] font-bold"
                             >

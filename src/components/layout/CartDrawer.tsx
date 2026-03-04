@@ -34,7 +34,7 @@ export default function CartDrawer() {
         // 2. Redirect to WhatsApp
         const itemText = cart.map(item => `${item.quantity}x ${item.name} (₹${item.price})`).join("%0A");
         const message = `Hi AdultPlayToys, I'd like to order:%0A%0A${itemText}%0A%0ATotal: ₹${cartTotal}%0A%0APlease let me know the next steps for payment and delivery.`;
-        window.open(`https://wa.me/919876543210?text=${message}`, "_blank");
+        window.open(`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919876543210'}?text=${message}`, "_blank");
     };
 
     return (
