@@ -45,8 +45,8 @@ export default function ShopPage() {
         const fetchData = async () => {
             try {
                 const [prodsRes, catsRes] = await Promise.all([
-                    fetch("http://localhost:8001/api/products/"),
-                    fetch("http://localhost:8001/api/categories/")
+                    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/`),
+                    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories/`)
                 ]);
 
                 if (prodsRes.ok && catsRes.ok) {

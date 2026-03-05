@@ -33,7 +33,7 @@ export default function WishlistPage() {
             }
 
             try {
-                const response = await fetch("http://localhost:8001/api/products/");
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/`);
                 const data = await response.json();
                 // Filter all products to only show liked ones
                 const likedProducts = data.filter((p: Product) => likedIds.map(String).includes(p.id.toString()));

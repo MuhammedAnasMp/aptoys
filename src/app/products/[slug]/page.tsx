@@ -39,7 +39,7 @@ export default function ProductDetails() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await fetch(`http://localhost:8001/api/products/${slug}/`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${slug}/`);
                 if (!response.ok) throw new Error("Product not found");
                 const data = await response.json();
                 setProduct(data);

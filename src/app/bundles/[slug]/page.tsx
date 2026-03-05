@@ -41,7 +41,7 @@ export default function BundleDetails() {
     useEffect(() => {
         const fetchBundle = async () => {
             try {
-                const response = await fetch(`http://localhost:8001/api/bundles/${slug}/`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bundles/${slug}/`);
                 if (response.ok) {
                     const data = await response.json();
                     setBundle(data);
@@ -170,7 +170,7 @@ export default function BundleDetails() {
                                 onClick={async () => {
                                     // 1. Log to backend
                                     try {
-                                        await fetch("http://localhost:8001/api/cart-inquiries/", {
+                                        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart-inquiries/`, {
                                             method: "POST",
                                             headers: { "Content-Type": "application/json" },
                                             body: JSON.stringify({

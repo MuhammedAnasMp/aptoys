@@ -30,7 +30,7 @@ export default function BundleSection() {
     useEffect(() => {
         const fetchBundles = async () => {
             try {
-                const response = await fetch("http://localhost:8001/api/bundles/");
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bundles/`);
                 const data = await response.json();
                 setBundles(data);
 

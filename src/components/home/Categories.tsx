@@ -32,7 +32,7 @@ export default function Categories() {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await fetch("http://localhost:8001/api/categories/");
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories/`);
                 const data = await res.json();
                 setCategories(data);
             } catch (error) {

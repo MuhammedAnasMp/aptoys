@@ -1,6 +1,6 @@
 import { staticBlogs } from "@/constants/blogs";
 
-const API_BASE_URL = "http://localhost:8001/api";
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api` || "https://myincome.pythonanywhere.com/api";
 
 export async function getBlogs() {
     try {
