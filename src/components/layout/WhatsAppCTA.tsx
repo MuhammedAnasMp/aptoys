@@ -24,7 +24,7 @@ export default function WhatsAppCTA({ productName, productId, variant = 'sticky'
             onClick={async () => {
                 // 1. Log to backend for analysis
                 try {
-                    await fetch("http://localhost:8001/api/cart-inquiries/", {
+                    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart-inquiries/`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({

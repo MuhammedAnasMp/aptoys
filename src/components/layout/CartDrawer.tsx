@@ -19,7 +19,7 @@ export default function CartDrawer() {
 
         try {
             // 1. Store in backend for analysis
-            await fetch("http://localhost:8001/api/cart-inquiries/", {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart-inquiries/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

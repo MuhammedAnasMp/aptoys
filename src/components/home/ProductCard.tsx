@@ -69,7 +69,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         } else {
             newItems = [...likedItems, String(product.id)];
             try {
-                await fetch('http://localhost:8001/api/wishlist/', {
+                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/wishlist/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ product: product.id })

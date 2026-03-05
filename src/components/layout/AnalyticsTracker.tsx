@@ -13,7 +13,7 @@ function AnalyticsContent() {
         // 1. Log General Site Visit
         const logVisit = async () => {
             try {
-                await fetch('http://localhost:8001/api/site-visits/', {
+                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/site-visits/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -42,7 +42,7 @@ function AnalyticsContent() {
                         productSlug = pathname.split('/bundles/')[1];
                     }
 
-                    await fetch('http://localhost:8001/api/referral-visits/', {
+                    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/referral-visits/`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({

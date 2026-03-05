@@ -34,8 +34,8 @@ export default function FeaturedProducts() {
         const fetchData = async () => {
             try {
                 const [catRes, prodRes] = await Promise.all([
-                    fetch("http://localhost:8001/api/categories/"),
-                    fetch("http://localhost:8001/api/products/")
+                    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories/`),
+                    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/`)
                 ]);
                 const catData = await catRes.json();
                 const prodData = await prodRes.json();
