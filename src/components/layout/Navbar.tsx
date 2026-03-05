@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiShoppingCart, FiSearch, FiMenu, FiX, FiUser, FiHeart } from "react-icons/fi";
@@ -42,9 +43,14 @@ export default function Navbar() {
         >
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2">
-                    <div className="w-10 h-10 bg-gradient-to-tr from-neon-purple to-electric-blue rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.5)]">
-                        <span className="text-white font-bold text-xl">A</span>
+                <Link href="/" className="flex items-center gap-3 group">
+                    <div className="relative w-10 h-10 overflow-hidden rounded-xl shadow-[0_0_15px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transition-all duration-300">
+                        <Image
+                            src="/logo.png"
+                            alt="AdultPlayToys Logo"
+                            fill
+                            className="object-contain p-1"
+                        />
                     </div>
                     <div className="hidden md:block">
                         <span className="text-xl font-bold tracking-tighter">AdultPlay<span className="text-neon-purple">Toys</span></span>

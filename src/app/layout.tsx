@@ -15,9 +15,14 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "AdultPlayToys.in | Private. Premium. Future Wellness.",
-  description: "Next-generation private wellness tech brand. Discreet delivery guaranteed.",
-  keywords: ["wellness", "premium toys", "discreet delivery", "future wellness"],
+  // title: "AdultPlayToys.in | Private. Premium. Future Wellness.",
+  // description: "Next-generation private wellness tech brand. Discreet delivery guaranteed.",
+  // keywords: ["wellness", "premium toys", "discreet delivery", "future wellness"],
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/favicon.png',
+    apple: '/icon.png',
+  },
 };
 
 export default function RootLayout({

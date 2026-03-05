@@ -6,6 +6,7 @@ import FeaturedProducts from "@/components/home/FeaturedProducts";
 import SocialProofToast from "@/components/home/SocialProofToast";
 import BundleSection from "@/components/home/BundleSection";
 import BackgroundReveal from "@/components/ui/BackgroundReveal";
+import ParallaxIcons from "@/components/ui/ParallaxIcons";
 import { useSiteMedia } from "@/hooks/useSiteMedia";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <div className="relative overflow-hidden">
       <BackgroundReveal backgroundImage={backgroundImage} />
+      <ParallaxIcons />
       <Hero />
       <SocialProofToast />
       <BundleSection />

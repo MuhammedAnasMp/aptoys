@@ -16,7 +16,7 @@ export default async function CommunityPage() {
     const threads = await getThreads();
 
     return (
-        <div className="min-h-screen py-24 px-6 md:px-12 bg-[#0B0F19]">
+        <div className="min-h-screen py-12 px-6 md:px-8 bg-[#0B0F19]">
             <CommunityClient initialThreads={threads} />
 
             {/* Structured Data for Discussions */}

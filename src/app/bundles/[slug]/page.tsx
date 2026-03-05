@@ -11,6 +11,7 @@ import { useCart } from "@/context/CartContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppCTA from "@/components/layout/WhatsAppCTA";
+import TrustPayment from "@/components/ui/TrustPayment";
 
 interface Bundle {
     id: string;
@@ -204,6 +205,8 @@ export default function BundleDetails() {
                                 <span className="text-[8px] uppercase tracking-widest text-white/40 font-bold">Private Return</span>
                             </div>
                         </div>
+
+                        <TrustPayment />
                     </motion.div>
                 </div>
             </div>

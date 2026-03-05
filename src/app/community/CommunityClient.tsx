@@ -100,22 +100,22 @@ export default function CommunityClient({ initialThreads }: { initialThreads: an
     };
 
     return (
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
             {/* Main Content */}
             <div className="flex-grow">
-                <div className="flex items-center justify-between mb-12">
+                <div className="flex items-center justify-between mb-8">
                     <div>
-                        <span className="text-electric-blue text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block">Echo System</span>
-                        <h1 className="text-4xl md:text-7xl font-black mb-4 tracking-tighter">Community.</h1>
+                        <span className="text-electric-blue text-[9px] uppercase tracking-[0.4em] font-bold mb-2 block opacity-70">Echo System</span>
+                        <h1 className="text-3xl md:text-7xl font-black mb-0 tracking-tight">Community</h1>
 
-                        <div className="mt-6 flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+                        <div className="mt-4 flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                             {categories.map(cat => (
                                 <button
                                     key={cat}
                                     onClick={() => handleCategoryChange(cat)}
-                                    className={`px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${selectedCategory === cat
-                                        ? 'bg-electric-blue text-white shadow-[0_0_20px_rgba(0,243,255,0.3)]'
-                                        : 'bg-white/5 text-white/40 hover:bg-white/10'
+                                    className={`px-4 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${selectedCategory === cat
+                                        ? 'bg-electric-blue text-white shadow-[0_0_15px_rgba(0,243,255,0.2)]'
+                                        : 'text-white/40 hover:text-white/60'
                                         }`}
                                 >
                                     {cat}
@@ -125,19 +125,19 @@ export default function CommunityClient({ initialThreads }: { initialThreads: an
                     </div>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="neon-button hidden md:flex items-center gap-2"
+                        className="neon-button hidden md:flex items-center gap-2 h-10 px-6 text-[10px]"
                     >
                         <FiPlus /> New Thread
                     </button>
                 </div>
 
-                <div className="mb-8">
+                <div className="mb-6">
                     <input
                         type="text"
                         placeholder="Search discussions..."
                         value={searchTerm}
                         onChange={(e) => handleSearchChange(e.target.value)}
-                        className="w-full h-14 glass-card bg-white/5 px-6 outline-none focus:border-electric-blue transition-colors"
+                        className="w-full h-12 glass-card bg-white/5 px-6 outline-none focus:border-electric-blue transition-colors text-sm"
                     />
                 </div>
 
@@ -149,25 +149,25 @@ export default function CommunityClient({ initialThreads }: { initialThreads: an
                                 layout
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className={`glass-card overflow-hidden transition-all duration-300 ${expandedThreadId === thread.id
-                                    ? 'border-electric-blue/50 ring-1 ring-electric-blue/20 bg-electric-blue/[0.02]'
-                                    : 'hover:border-electric-blue/30 cursor-pointer'
+                                className={`overflow-hidden transition-all duration-300 ${expandedThreadId === thread.id
+                                    ? 'border-b border-electric-blue/30 bg-electric-blue/[0.01]'
+                                    : 'border-b border-white/5 hover:border-white/10 cursor-pointer'
                                     }`}
                                 onClick={() => expandedThreadId !== thread.id && toggleThread(thread.id)}
                             >
                                 {/* Thread Header - Always Visible */}
-                                <div className="px-4 py-5">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-electric-blue bg-electric-blue/10 px-3 py-1 rounded-full">
+                                <div className="px-5 py-4">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-electric-blue bg-electric-blue/10 px-2 py-0.5 rounded-full">
                                                 {thread.category}
                                             </span>
-                                            <span className="text-white/20 text-[10px] font-bold uppercase tracking-widest italic">
+                                            <span className="text-white/20 text-[9px] font-bold uppercase tracking-widest italic">
                                                 By <span className="text-white/40 not-italic">{thread.author}</span>
                                             </span>
                                         </div>
-                                        <div className="flex items-center gap-4">
-                                            <span className="text-white/20 text-[10px] font-bold uppercase tracking-widest">
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-white/20 text-[9px] font-bold uppercase tracking-widest">
                                                 {new Date(thread.created_at).toLocaleDateString()}
                                             </span>
                                             {expandedThreadId === thread.id ? (
@@ -179,20 +179,20 @@ export default function CommunityClient({ initialThreads }: { initialThreads: an
                                             )}
                                         </div>
                                     </div>
-                                    <h3 className={`text-xl font-bold mb-4 transition-colors ${expandedThreadId === thread.id ? 'text-electric-blue' : 'group-hover:text-electric-blue'}`}>
+                                    <h3 className={`text-lg font-bold mb-2 transition-colors ${expandedThreadId === thread.id ? 'text-electric-blue' : 'group-hover:text-electric-blue'}`}>
                                         {thread.title}
                                     </h3>
                                     <div className="flex items-center justify-between">
-                                        <div className="flex gap-6">
-                                            <div className="flex items-center gap-2 text-white/30 text-[10px] font-bold uppercase tracking-widest">
-                                                <FiMessageCircle className="text-electric-blue" /> {thread.reply_count}
+                                        <div className="flex gap-4">
+                                            <div className="flex items-center gap-1.5 text-white/30 text-[9px] font-bold uppercase tracking-widest">
+                                                <FiMessageCircle className="text-electric-blue size-3" /> {thread.reply_count}
                                             </div>
-                                            <div className="flex items-center gap-2 text-white/30 text-[10px] font-bold uppercase tracking-widest">
-                                                <FiArrowUp className="text-green-500" /> {thread.upvotes}
+                                            <div className="flex items-center gap-1.5 text-white/30 text-[9px] font-bold uppercase tracking-widest">
+                                                <FiArrowUp className="text-green-500 size-3" /> {thread.upvotes}
                                             </div>
                                         </div>
                                         {expandedThreadId !== thread.id && (
-                                            <span className="text-[10px] font-bold uppercase tracking-widest text-electric-blue/40">Click to expand</span>
+                                            <span className="text-[8px] font-bold uppercase tracking-widest text-white/10 group-hover:text-electric-blue/40 transition-colors">Click to expand</span>
                                         )}
                                     </div>
                                 </div>
@@ -207,10 +207,10 @@ export default function CommunityClient({ initialThreads }: { initialThreads: an
                                             transition={{ duration: 0.3, ease: "easeInOut" }}
                                             className="border-t border-white/5"
                                         >
-                                            <div className="p-8 space-y-8">
+                                            <div className="py-4 space-y-6">
                                                 {/* Original Content */}
-                                                <div className="bg-white/2 p-6 rounded-2xl">
-                                                    <p className="text-white/60 leading-relaxed whitespace-pre-wrap">{thread.content}</p>
+                                                <div className="rounded-xl">
+                                                    <p className="text-white/50 text-sm leading-relaxed whitespace-pre-wrap">{thread.content}</p>
                                                 </div>
 
                                                 {/* Replies Section */}
@@ -324,30 +324,30 @@ export default function CommunityClient({ initialThreads }: { initialThreads: an
             </div>
 
             {/* Sidebar */}
-            <div className="w-full lg:w-80 shrink-0">
-                <div className="sticky top-28 space-y-8">
-                    <div className="glass-card p-8 bg-gradient-to-br from-electric-blue/10 to-transparent">
-                        <h4 className="font-bold text-sm uppercase tracking-widest mb-6">Trending Topics</h4>
-                        <ul className="space-y-4">
+            <div className="w-full lg:w-72 shrink-0">
+                <div className="sticky top-28 space-y-6">
+                    <div className="glass-card p-6 bg-gradient-to-br from-electric-blue/5 to-transparent border-electric-blue/10">
+                        <h4 className="font-bold text-[10px] uppercase tracking-[0.3em] mb-4 text-white/60">Trending Topics</h4>
+                        <ul className="space-y-3">
                             {["#NebulaGlow", "#DiscreetLiving", "#BioTechWellness"].map(tag => (
-                                <li key={tag} className="text-xs text-white/50 hover:text-white cursor-pointer flex justify-between items-center transition-colors">
+                                <li key={tag} className="text-[11px] text-white/40 hover:text-electric-blue cursor-pointer flex justify-between items-center transition-colors">
                                     <span>{tag}</span>
-                                    <span className="bg-white/5 px-2 py-0.5 rounded-full text-[8px]">Fire</span>
+                                    <span className="bg-electric-blue/10 text-electric-blue px-2 py-0.5 rounded-full text-[7px] font-black uppercase">Trending</span>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
-                    <div className="glass-card p-8">
-                        <h4 className="font-bold text-sm uppercase tracking-widest mb-6">Community Stats</h4>
-                        <div className="space-y-6">
-                            <div>
-                                <p className="text-2xl font-black text-neon-purple">12,402</p>
-                                <p className="text-[10px] uppercase tracking-widest text-white/30">Explorers</p>
+                    <div className="glass-card p-6 border-white/5">
+                        <h4 className="font-bold text-[10px] uppercase tracking-[0.3em] mb-4 text-white/60">Community Stats</h4>
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Explorers</p>
+                                <p className="text-xl font-black text-neon-purple tracking-tighter">12,402</p>
                             </div>
-                            <div>
-                                <p className="text-2xl font-black text-electric-blue">89k+</p>
-                                <p className="text-[10px] uppercase tracking-widest text-white/30">Messages Sent</p>
+                            <div className="flex items-center justify-between">
+                                <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Messages</p>
+                                <p className="text-xl font-black text-electric-blue tracking-tighter">89k+</p>
                             </div>
                         </div>
                     </div>

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function FAQPage() {
     return (
-        <div className="min-h-screen py-24 px-6 relative overflow-hidden">
+        <div className="min-h-screen py-10 px-6 relative overflow-hidden">
             {/* Background elements for premium feel */}
             <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-neon-purple/5 blur-[120px] rounded-full -z-10" />
             <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-electric-blue/5 blur-[120px] rounded-full -z-10" />

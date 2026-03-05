@@ -70,7 +70,7 @@ export default function BundleSection() {
     if (loading || bundles.length === 0) return null;
 
     return (
-        <section className="py-24 px-6 md:px-12 bg-space-black relative overflow-hidden">
+        <section className="py-24 px-6 md:px-12 relative overflow-hidden">
             {/* Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-neon-purple/5 blur-[150px] rounded-full pointer-events-none" />
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaInstagram, FaFacebook, FaGlobe } from "react-icons/fa";
 import WhatsAppCTA from "./WhatsAppCTA";
 
@@ -8,11 +9,16 @@ export default function Footer() {
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
                 {/* Brand */}
                 <div className="col-span-1 md:col-span-1">
-                    <Link href="/" className="flex items-center gap-2 mb-6">
-                        <div className="w-8 h-8 bg-gradient-to-tr from-neon-purple to-electric-blue rounded-lg flex items-center justify-center">
-                            <span className="text-white font-bold text-lg">A</span>
+                    <Link href="/" className="flex items-center gap-3 mb-6 group">
+                        <div className="relative w-8 h-8 overflow-hidden rounded-lg">
+                            <Image
+                                src="/logo.png"
+                                alt="AdultPlayToys Logo"
+                                fill
+                                className="object-contain p-0.5"
+                            />
                         </div>
-                        <span className="text-lg font-bold tracking-tighter text-white">AdultPlay<span className="text-neon-purple">Toys</span></span>
+                        <span className="text-lg font-bold tracking-tighter text-white group-hover:text-neon-purple transition-colors">AdultPlay<span className="text-neon-purple">Toys</span></span>
                     </Link>
                     <p className="text-white/40 text-sm leading-relaxed mb-6">
                         Future Wellness. Private. Premium. Next-generation wellness tech brand for the modern explorer.

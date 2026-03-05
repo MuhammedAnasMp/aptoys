@@ -91,7 +91,7 @@ export default function ShopPage() {
                         <TextMask
                             text="The Collection."
                             backgroundImage={maskImage}
-                            className="text-5xl md:text-8xl lg:text-9xl"
+                            className="text-5xl md:text-8xl lg:text-8xl"
                         />
                     </div>
 

@@ -45,7 +45,7 @@ export default function Categories() {
     }, []);
 
     if (loading) return (
-        <section className="py-24 px-6 md:px-12 bg-[#0B0F19]">
+        <section className="py-24 px-6 md:px-12">
             <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-6 gap-6">
                 {[1, 2, 3, 4, 5, 6].map(i => (
                     <div key={i} className="aspect-square glass-card animate-pulse bg-white/5 rounded-2xl" />
@@ -55,7 +55,7 @@ export default function Categories() {
     );
 
     return (
-        <section className="py-24 px-6 md:px-12 bg-[#0B0F19]">
+        <section className="py-24 px-6 md:px-12">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-16">
                     <span className="text-neon-purple text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block">Categories</span>
