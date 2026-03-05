@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   // title: "AdultPlayToys.in | Private. Premium. Future Wellness.",
   // description: "Next-generation private wellness tech brand. Discreet delivery guaranteed.",
   // keywords: ["wellness", "premium toys", "discreet delivery", "future wellness"],
+
+
+  title: "sample title",
+  description: "sample description",
+  keywords: ["sample keywords"],
   icons: {
     icon: '/icon.png',
     shortcut: '/favicon.png',
