@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { FiClock, FiUser, FiArrowLeft, FiShare2 } from "react-icons/fi";
 
+import BlogImage from "@/components/blog/BlogImage";
+
 export default function BlogPostClient({ blog }: { blog: any }) {
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
@@ -77,17 +79,15 @@ export default function BlogPostClient({ blog }: { blog: any }) {
                 </header>
 
                 {/* Hero Image */}
-                {blog.thumbnail && (
-                    <div className="mb-16 aspect-video rounded-[3rem] overflow-hidden glass-card relative">
-                        <Image
-                            src={blog.thumbnail}
-                            alt={blog.mediaKey || blog.title}
-                            fill
-                            className="object-cover opacity-80"
-                            priority
-                        />
-                    </div>
-                )}
+                <div className="mb-16 aspect-video rounded-[3rem] overflow-hidden glass-card relative">
+                    <BlogImage
+                        thumbnail={blog.thumbnail}
+                        mediaKey={blog.mediaKey}
+                        alt={blog.mediaKey || blog.title}
+                        className="object-cover opacity-80"
+                        priority
+                    />
+                </div>
 
                 {/* Content */}
                 <article className="prose prose-invert prose-p:text-white/50 prose-p:text-lg prose-p:leading-relaxed prose-headings:text-white prose-headings:font-black prose-headings:tracking-tighter max-w-none mb-20 text-white/70">

@@ -13,37 +13,7 @@ interface BlogItemImageProps {
     className?: string;
 }
 
-function BlogItemImage({ index, thumbnail, alt, mediaKey, className }: BlogItemImageProps) {
-    // If thumbnail is a full URL and no mediaKey was explicitly provided 
-    // it's an API-fetched blog. Use the thumbnail directly from Cloudinary.
-    const isApiBlog = thumbnail && (thumbnail.startsWith('http://') || thumbnail.startsWith('https://')) && !mediaKey;
-    if (isApiBlog) {
-        console.log("isApiBlog", thumbnail);
-        return (
-            <Image
-                src={thumbnail}
-                alt={alt}
-                fill
-                className={className}
-            />
-        );
-    }
-
-    // For static/hardcoded blogs:
-    // Generate/use a key that points to the 'site_media' folder via useSiteMedia.
-    // The fallback starts from 'blog_img_100' based on the index.
-    const key = mediaKey || `blog_img_${index + 100}`;
-    const { mediaUrl: cloudinaryUrl } = useSiteMedia(key, 'https://yavuzceliker.github.io/sample-images/image-1021.jpg');
-    console.log("cloudinaryUrl", cloudinaryUrl);
-    return (
-        <Image
-            src={cloudinaryUrl}
-            alt={alt}
-            fill
-            className={className}
-        />
-    );
-}
+import BlogImage from "@/components/blog/BlogImage";
 
 export default function BlogArchiveClient({ blogs }: { blogs: any[] }) {
     const featuredBlog = blogs[0];
@@ -60,12 +30,13 @@ export default function BlogArchiveClient({ blogs }: { blogs: any[] }) {
             {/* Featured Card */}
             {featuredBlog ? (
                 <Link href={`/blog/${featuredBlog.slug}`} className="group relative block w-full h-[600px] mb-20 rounded-[3rem] overflow-hidden glass-card">
-                    <BlogItemImage
+                    <BlogImage
                         index={0}
                         thumbnail={featuredBlog.thumbnail}
                         mediaKey={featuredBlog.mediaKey}
                         alt="hero"
                         className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-60"
+                        priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-space-black via-transparent to-transparent" />
                     <div className="absolute bottom-0 left-0 p-12 max-w-3xl">
@@ -94,7 +65,7 @@ export default function BlogArchiveClient({ blogs }: { blogs: any[] }) {
                     >
                         <Link href={`/blog/${blog.slug}`} className="group block glass-card glass-card-hover p-6">
                             <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-8">
-                                <BlogItemImage
+                                <BlogImage
                                     index={idx + 1}
                                     thumbnail={blog.thumbnail}
                                     mediaKey={blog.mediaKey}

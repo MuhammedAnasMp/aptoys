@@ -8,7 +8,7 @@ export const staticBlogs = [
         reading_time: 4,
         category: "Philosophy",
         content: "Adlply was born from a desire to merge high-end aesthetics with personal wellness. We believe that the objects we interact with should be as beautiful as they are functional.",
-        thumbnail: "https://res.cloudinary.com/dyt8amitd/image/upload/blogs_image/blog_img_100",
+        thumbnail: "https://res.cloudinary.com/dyt8amitd/image/upload/site_media/blog_img_100",
         mediaKey: "blog_img_100"
     },
     {
@@ -20,7 +20,7 @@ export const staticBlogs = [
         reading_time: 3,
         category: "Sustainability",
         content: "Our commitment to the planet is as strong as our commitment to you. Discover our new biodegradable packaging that ensures discretion without environmental impact.",
-        thumbnail: "https://res.cloudinary.com/dyt8amitd/image/upload/blogs_image/blog_img_101",
+        thumbnail: "https://res.cloudinary.com/dyt8amitd/image/upload/site_media/blog_img_101",
         mediaKey: "blog_img_101"
     }
 ];
