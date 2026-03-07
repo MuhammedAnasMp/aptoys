@@ -17,8 +17,8 @@ function BlogItemImage({ index, thumbnail, alt, mediaKey, className }: BlogItemI
     // If thumbnail is a full URL and no mediaKey was explicitly provided 
     // it's an API-fetched blog. Use the thumbnail directly from Cloudinary.
     const isApiBlog = thumbnail && (thumbnail.startsWith('http://') || thumbnail.startsWith('https://')) && !mediaKey;
-
     if (isApiBlog) {
+        console.log("isApiBlog", thumbnail);
         return (
             <Image
                 src={thumbnail}
@@ -34,7 +34,7 @@ function BlogItemImage({ index, thumbnail, alt, mediaKey, className }: BlogItemI
     // The fallback starts from 'blog_img_100' based on the index.
     const key = mediaKey || `blog_img_${index + 100}`;
     const { mediaUrl: cloudinaryUrl } = useSiteMedia(key, 'https://yavuzceliker.github.io/sample-images/image-1021.jpg');
-    console.log(cloudinaryUrl);
+    console.log("cloudinaryUrl", cloudinaryUrl);
     return (
         <Image
             src={cloudinaryUrl}
