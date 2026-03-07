@@ -119,3 +119,40 @@ export async function createReply(data: { thread: number | string; content: stri
         return null;
     }
 }
+
+export async function getSocialProof() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/social-proof/`, {
+            next: { revalidate: 60 } // Cache for 1 minute
+        });
+        if (!response.ok) return [];
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching social proof:", error);
+        return [];
+    }
+}
+
+export async function getProducts() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/products/`, {
+            next: { revalidate: 3600 }
+        });
+        return response.ok ? await response.json() : [];
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        return [];
+    }
+}
+
+export async function getCategories() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/categories/`, {
+            next: { revalidate: 3600 }
+        });
+        return response.ok ? await response.json() : [];
+    } catch (error) {
+        console.error("Error fetching categories:", error);
+        return [];
+    }
+}

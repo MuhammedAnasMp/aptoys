@@ -162,7 +162,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                                 ) : (
                                     <Image
                                         src={allMedia[currentImageIndex].url}
-                                        alt={product.name}
+                                        alt={`${product.name} - Premium Wellness Tech`}
                                         fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                                     />

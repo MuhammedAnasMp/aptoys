@@ -59,7 +59,7 @@ export default function FAQClient() {
                                     >
                                         <button
                                             onClick={() => setActiveItem(activeItem === item.q ? null : item.q)}
-                                            className="w-full py-4 flex items-center justify-between text-left group"
+                                            className="w-full py-4 flex items-center justify-between text-left group px-3"
                                         >
                                             <span className={`text-sm font-bold transition-colors ${activeItem === item.q ? "text-white" : "text-white/60 group-hover:text-white"}`}>
                                                 {item.q}
@@ -74,7 +74,7 @@ export default function FAQClient() {
                                                     exit={{ height: 0, opacity: 0 }}
                                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                                 >
-                                                    <div className="pb-5 text-white/40 text-sm leading-relaxed pt-2">
+                                                    <div className="pb-5 text-white/40 text-sm leading-relaxed pt-2 px-3">
                                                         {item.a}
                                                     </div>
                                                 </motion.div>

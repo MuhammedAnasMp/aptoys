@@ -9,7 +9,7 @@ export default function Footer() {
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
                 {/* Brand */}
                 <div className="col-span-1 md:col-span-1">
-                    <Link href="/" className="flex items-center gap-3 mb-6 group">
+                    <Link href="/" className="flex items-center gap-2 mb-6 group">
                         <div className="relative w-8 h-8 overflow-hidden rounded-lg">
                             <Image
                                 src="/logo.png"
@@ -18,10 +18,10 @@ export default function Footer() {
                                 className="object-contain p-0.5"
                             />
                         </div>
-                        <span className="text-lg font-bold tracking-tighter text-white group-hover:text-neon-purple transition-colors">AdultPlay<span className="text-neon-purple">Toys</span></span>
+                        {/* :TODO uncomment after logo is ready <span className="text-lg font-bold tracking-tighter text-white group-hover:text-neon-purple transition-colors">AdultPlay<span className="text-neon-purple">Toys</span></span> */}
                     </Link>
-                    <p className="text-white/40 text-sm leading-relaxed mb-6">
-                        Future Wellness. Private. Premium. Next-generation wellness tech brand for the modern explorer.
+                    <p className="text-white/40 text-sm leading-relaxed mb-10 pr-4">
+                        Premium wellness technology, delivered with 100% discretion. Directly imported globally to ensure the fairest price points in India.
                     </p>
                     <div className="flex gap-4">
                         <Link href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || "#"} className="w-10 h-10 glass-card flex items-center justify-center hover:text-neon-purple transition-colors">
@@ -51,7 +51,7 @@ export default function Footer() {
                     <ul className="space-y-4">
                         <li><Link href="/philosophy" className="text-white/50 hover:text-neon-purple text-sm transition-colors">Philosophy</Link></li>
                         {["Wellness Guide", "Blog", "Community", "FAQ", "Privacy Policy"].map(link => (
-                            <li key={link}><Link href={link === "Blog" ? "/blog" : link === "FAQ" ? "/faq" : link === "Community" ? "/community" : "#"} className="text-white/50 hover:text-neon-purple text-sm transition-colors">{link}</Link></li>
+                            <li key={link}><Link href={link === "Blog" ? "/blog" : link === "FAQ" ? "/faq" : link === "Community" ? "/community" : link === "Privacy Policy" ? "/privacy-policy" : link === "Wellness Guide" ? "/wellness-guide" : "#"} className="text-white/50 hover:text-neon-purple text-sm transition-colors">{link}</Link></li>
                         ))}
                     </ul>
                 </div>
@@ -67,10 +67,10 @@ export default function Footer() {
             </div>
 
             <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p className="text-white/30 text-[10px] uppercase tracking-widest">© 2026 AdultPlayToys.in. All Rights Reserved.</p>
+                {/* :TODO uncomment after logo is ready <p className="text-white/30 text-[10px] uppercase tracking-widest">© 2026 AdultPlayToys.in. All Rights Reserved.</p> */}
                 <div className="flex gap-6">
                     <Link href="#" className="text-white/30 text-[10px] uppercase tracking-widest hover:text-white transition-colors">Terms of Service</Link>
-                    <Link href="#" className="text-white/30 text-[10px] uppercase tracking-widest hover:text-white transition-colors">Privacy Policy</Link>
+                    <Link href="/privacy-policy" className="text-white/30 text-[10px] uppercase tracking-widest hover:text-white transition-colors">Privacy Policy</Link>
                 </div>
             </div>
         </footer>

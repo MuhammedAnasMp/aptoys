@@ -26,13 +26,12 @@ export default function Hero() {
                         Private. Premium. Future Wellness.
                     </span>
                     <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-8 leading-[0.9]">
-                        The Future of <br />
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-neon-purple via-glow-pink to-electric-blue">Personal Bliss.</span>
+                        {/* :TODO uncomment after logo is ready Elevated Adult <br /> */}
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-neon-purple via-glow-pink to-electric-blue">Wellness Tech.</span>
                     </h1>
                     <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
-                        Elevate your wellness with next-generation technology. discreetly delivered to your doorstep. Experience the premium standard of modern intimacy.
+                        Discover the premium standard of modern intimacy. Discreetly delivered innovations for your personal well-being, powered by biotech and engineering excellence.
                     </p>
-
                     <div className="flex flex-col md:flex-row items-center justify-center gap-6">
                         <Link href="/shop" className="neon-button px-10 py-4 text-sm group">
                             Explore Collection
@@ -61,6 +60,6 @@ export default function Hero() {
 
             {/* Hero Image Mockup (Optional/Decorative) */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-32 bg-gradient-to-t from-space-black to-transparent z-20" />
-        </section>
+        </section >
     );
 }

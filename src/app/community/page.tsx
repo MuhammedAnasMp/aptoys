@@ -3,11 +3,11 @@ import { getThreads } from "@/lib/api";
 import CommunityClient from "./CommunityClient";
 
 export const metadata: Metadata = {
-    title: "Community | Adlply - Echo System",
-    description: "Join the conversation. Discuss future wellness, biotech, and engineering philosophy with the Adlply community.",
+    title: "Echo System | Private Wellness Community",
+    description: "Join the Adlply Echo System. A private community discussing future wellness, biotechnology, and the intersection of engineering and intimacy in India.",
     openGraph: {
-        title: "Adlply Community",
-        description: "Join the Echo System. Discuss the future of wellness.",
+        title: "Adlply Echo System Community",
+        description: "Join the conversation. Discuss the future of wellness tech.",
         type: "website",
     }
 };

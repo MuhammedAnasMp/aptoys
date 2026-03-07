@@ -3,22 +3,35 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiCheckCircle } from "react-icons/fi";
+import { getSocialProof } from "@/lib/api";
 
 const randomPurchases = [
-    { name: "Rahul", city: "Delhi", product: "Nebula Pulse" },
-    { name: "Ananya", city: "Mumbai", product: "Zenith Flow Kit" },
-    { name: "Siddharth", city: "Bangalore", product: "Aether Glow" },
-    { name: "Priya", city: "Hyderabad", product: "Nova Skin Care" },
-    { name: "Kunal", city: "Pune", product: "Wellness Bundle" },
+    { text: "Rahul from Delhi purchased Nebula Pulse" },
+    { text: "Ananya from Mumbai purchased Zenith Flow Kit" },
+    { text: "Siddharth from Bangalore purchased Aether Glow" },
+    { text: "Priya from Hyderabad purchased Nova Skin Care" },
+    { text: "Kunal from Pune purchased Wellness Bundle" },
 ];
 
 export default function SocialProofToast() {
-    const [current, setCurrent] = useState<typeof randomPurchases[0] | null>(null);
+    const [current, setCurrent] = useState<{ text: string } | null>(null);
     const [show, setShow] = useState(false);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        const loadApiData = async () => {
+            const data = await getSocialProof();
+            if (data && data.length > 0) {
+                setApiData(data.filter((i: any) => i.is_active));
+            }
+        };
+        loadApiData();
+    }, []);
 
     useEffect(() => {
         const showToast = () => {
-            const random = randomPurchases[Math.floor(Math.random() * randomPurchases.length)];
+            const dataSource = apiData.length > 0 ? apiData : randomPurchases;
+            const random = dataSource[Math.floor(Math.random() * dataSource.length)];
             setCurrent(random);
             setShow(true);
 
@@ -51,11 +64,14 @@ export default function SocialProofToast() {
                             <FiCheckCircle size={20} />
                         </div>
                         <div>
-                            <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest leading-none mb-1">Live Purchase</p>
-                            <p className="text-xs font-medium text-white">
-                                <span className="font-bold text-neon-purple">{current.name}</span> from {current.city}
+                            <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest leading-none mb-1.5">Live Purchase</p>
+                            <p className="text-xs font-medium text-white max-w-[180px] leading-tight">
+                                {current.text.split(' purchased ').map((part: string, i: number) => (
+                                    <span key={i}>
+                                        {i === 1 ? <><br /><span className="text-white/40 text-[9px] uppercase tracking-widest font-bold">purchased </span><span className="text-electric-blue font-bold">{part}</span></> : <span className="text-neon-purple font-bold">{part}</span>}
+                                    </span>
+                                ))}
                             </p>
-                            <p className="text-[10px] text-white/60">purchased <span className="text-electric-blue font-bold">{current.product}</span></p>
                         </div>
                     </div>
                 </motion.div>

@@ -81,7 +81,8 @@ export default function Categories() {
                                     <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
 
                                     <div className={`mb-4 w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-                                        <Icon size={24} />
+                                        <Icon size={24} aria-hidden="true" />
+                                        <span className="sr-only">{cat.name} icon</span>
                                     </div>
 
                                     <h3 className="text-[10px] font-black uppercase tracking-widest text-white/70 group-hover:text-white transition-colors">

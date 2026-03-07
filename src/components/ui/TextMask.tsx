@@ -27,7 +27,7 @@ export default function TextMask({ text, backgroundImage: defaultImage, classNam
 
     const maskImage = useTransform(
         [springX, springY],
-        ([x, y]) => `radial-gradient(circle 100px at ${x}px ${y}px, black 0%, transparent 70%)`
+        ([x, y]) => `radial-gradient(circle 100px at ${x}px ${y}px, black 0%, transparent 100%)`
     );
 
     useEffect(() => {

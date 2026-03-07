@@ -72,11 +72,30 @@ export default function CommunityClient({ initialThreads }: { initialThreads: an
     const handlePostReply = async (threadId: string | number) => {
         if (!replyContent) return;
         setIsSubmitting(true);
-        const result = await createReply({
-            thread: threadId,
-            content: replyContent,
-            author: "User_" + Math.floor(Math.random() * 1000) // Mock user
-        });
+
+        // Check if it's a static thread
+        const isStatic = String(threadId).startsWith("static-");
+
+        let result;
+        if (isStatic) {
+            // Mock a successful API response for static threads
+            result = {
+                id: "mock-r-" + Math.random().toString(36).substr(2, 9),
+                thread: threadId,
+                content: replyContent,
+                author: "You (Mock)",
+                created_at: new Date().toISOString()
+            };
+        } else {
+            // Call real API - ensure threadId is a number if it's numeric
+            const numericThreadId = isNaN(Number(threadId)) ? threadId : Number(threadId);
+            result = await createReply({
+                thread: numericThreadId,
+                content: replyContent,
+                author: "User_" + Math.floor(Math.random() * 1000) // Mock user
+            });
+        }
+
         if (result) {
             setThreads(threads.map(t => {
                 if (t.id === threadId) {
@@ -329,9 +348,13 @@ export default function CommunityClient({ initialThreads }: { initialThreads: an
                     <div className="glass-card p-6 bg-gradient-to-br from-electric-blue/5 to-transparent border-electric-blue/10">
                         <h4 className="font-bold text-[10px] uppercase tracking-[0.3em] mb-4 text-white/60">Trending Topics</h4>
                         <ul className="space-y-3">
-                            {["#NebulaGlow", "#DiscreetLiving", "#BioTechWellness"].map(tag => (
-                                <li key={tag} className="text-[11px] text-white/40 hover:text-electric-blue cursor-pointer flex justify-between items-center transition-colors">
-                                    <span>{tag}</span>
+                            {["NebulaGlow", "Discreet", "Upcoming 2026",].map(tag => (
+                                <li
+                                    key={tag}
+                                    onClick={() => handleSearchChange(tag)}
+                                    className="text-[11px] text-white/40 hover:text-electric-blue cursor-pointer flex justify-between items-center transition-colors group/tag"
+                                >
+                                    <span className="group-hover/tag:translate-x-1 transition-transform">{tag}</span>
                                     <span className="bg-electric-blue/10 text-electric-blue px-2 py-0.5 rounded-full text-[7px] font-black uppercase">Trending</span>
                                 </li>
                             ))}

@@ -44,20 +44,19 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-3 group">
-                    <div className="relative w-10 h-10 overflow-hidden rounded-xl shadow-[0_0_15px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transition-all duration-300">
+                    <div className="relative w-10 h-10 overflow-hidden rounded-2xl shadow-[0_0_15px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transition-all duration-300">
                         <Image
                             src="/logo.png"
                             alt="AdultPlayToys Logo"
                             fill
-                            className="object-contain p-1"
+                            className="object-contain "
                         />
                     </div>
                     <div className="hidden md:block">
-                        <span className="text-xl font-bold tracking-tighter">AdultPlay<span className="text-neon-purple">Toys</span></span>
+                        {/* :TODO uncomment after logo is ready <span className="text-xl font-bold tracking-tighter">AdultPlay<span className="text-neon-purple">Toys</span></span> */}
                         <p className="text-[10px] uppercase tracking-widest text-white/50 leading-none">Future Wellness</p>
                     </div>
                 </Link>
-
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-8">
                     {["Home", "Shop", "Blog", "Community", "FAQ"].map((item) => (

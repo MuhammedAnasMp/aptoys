@@ -41,7 +41,8 @@ export default function PhilosophyClient() {
                             <span className="bg-gradient-to-r from-neon-purple to-electric-blue bg-clip-text text-transparent italic">Ordinary.</span>
                         </h1>
                         <p className="text-white/50 text-xl leading-relaxed max-w-2xl">
-                            AdultPlayToys was born from a singular vision: to bridge the gap between high-performance tech and personal wellness. We believe that self-discovery is the final frontier of luxury and the ultimate expression of radical self-care.
+                            {/*:TODO uncomment after logo is ready AdultPlay */}
+                            Toys was born from a singular vision: to bridge the gap between high-performance tech and personal wellness. We believe that self-discovery is the final frontier of luxury and the ultimate expression of radical self-care.
                         </p>
                     </motion.div>
                 </section>
