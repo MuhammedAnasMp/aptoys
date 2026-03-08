@@ -16,9 +16,12 @@ const INDIAN_STATES = [
 // Trust Icons / Payment Methods
 const PAYMENT_METHODS = [
     { name: "UPI", icon: "https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" },
-    { name: "Visa", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg" },
+    { name: "GPay", icon: "https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" },
+    { name: "Paytm", icon: "https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" },
+    { name: "PhonePe", icon: "https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg" },
     { name: "Mastercard", icon: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" },
-    { name: "Amex", icon: "https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg" }
+    { name: "Crypto", icon: "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg" }
+
 ];
 
 interface SaleRecord {
@@ -153,7 +156,7 @@ export default function LiveSalesDashboard() {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-purple opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-neon-purple"></span>
                         </span>
-                        Live Transaction Velocity
+                        Live Velocity
                     </div>
                     <div className="flex flex-col md:flex-row justify-between items-end gap-6">
                         <h1 className="text-5xl md:text-8xl font-black tracking-tighter max-w-4xl leading-[0.9]">National <span className="bg-clip-text text-transparent bg-gradient-to-r from-neon-purple to-electric-blue">Trust.</span></h1>
@@ -226,8 +229,8 @@ export default function LiveSalesDashboard() {
                                 <h4 className="font-black text-2xl tracking-tighter mb-8 uppercase italic relative z-10">Secure Checkout</h4>
                                 <div className="grid grid-cols-2 gap-4 relative z-10">
                                     {PAYMENT_METHODS.map((pay) => (
-                                        <div key={pay.name} className="flex items-center justify-center p-4 rounded-xl bg-white/[0.03] border border-white/5 blur-[0.3px] hover:blur-0 transition-all">
-                                            <img src={pay.icon} alt={pay.name} className="h-6 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all filter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]" />
+                                        <div key={pay.name} className="flex items-center justify-center p-4 rounded-xl bg-white/[0.03] border border-white/5 blur-[0.3px] blur-0 transition-all">
+                                            <img src={pay.icon} alt={pay.name} className="h-6 opacity-40  blur-0 opacity-100 transition-all filter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]" />
                                         </div>
                                     ))}
                                 </div>
@@ -346,9 +349,9 @@ export default function LiveSalesDashboard() {
                 <div className="text-center bg-gradient-to-t from-white/5 to-transparent p-12 rounded-[40px] border border-white/5">
                     <FiLock className="mx-auto text-neon-purple mb-6" size={48} />
                     <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tighter uppercase italic">Your Secret is Safe.</h2>
-                    <p className="max-w-2xl mx-auto text-white/40 mb-10 text-lg">
+                    {/* <p className="max-w-2xl mx-auto text-white/40 mb-10 text-lg">
                         Adlply uses 256-bit military-grade encryption for all transactions. We appear as <span className="text-white font-bold italic">"ADL-BILLING"</span> on your statement.
-                    </p>
+                    </p> */}
                     <div className="flex flex-col sm:flex-row justify-center gap-6">
                         <button className="neon-button px-10 py-5 text-sm uppercase font-black tracking-widest">
                             Shop Discreetly Now
