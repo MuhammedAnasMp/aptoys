@@ -39,6 +39,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'static.fotor.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.istockphoto.com',
       }
     ],
   },
