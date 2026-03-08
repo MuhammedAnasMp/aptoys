@@ -13,8 +13,10 @@ export const metadata: Metadata = {
 };
 
 export default function ShopPage() {
-    <Suspense fallback={<div>Loading...</div>}>
+    return (
 
-        return <ShopClient />;
-    </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+            <ShopClient />;
+        </Suspense>
+    )
 }
