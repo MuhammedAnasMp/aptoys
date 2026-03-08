@@ -10,6 +10,7 @@ import ParallaxIcons from "@/components/ui/ParallaxIcons";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useSiteMedia } from "@/hooks/useSiteMedia";
+import { FiPackage, FiLock, FiTruck } from "react-icons/fi";
 
 export default function Home() {
   const { mediaUrl: backgroundImage } = useSiteMedia('home_bg_mask', '');
@@ -90,24 +91,30 @@ export default function Home() {
             <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-8">Discreet Delivery. <br />Decidedly Premium.</h2>
             <div className="space-y-8">
               <div className="flex gap-6">
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 text-neon-purple">📦</div>
+                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 text-neon-purple">
+                  <FiPackage size={20} />
+                </div>
                 <div>
                   <h4 className="font-bold mb-2">Anonymous Packaging</h4>
                   <p className="text-white/40 text-sm">Every order is shipped in plain, unmarked boxes with no mention of the contents or brand name on the label.</p>
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 text-electric-blue">🔒</div>
+                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 text-electric-blue">
+                  <FiLock size={20} />
+                </div>
                 <div>
                   <h4 className="font-bold mb-2">Secure Transactions</h4>
                   <p className="text-white/40 text-sm">We use bank-level encryption for all payments. 'Adlply' will not appear on your credit card statement.</p>
                 </div>
               </div>
               <div className="flex gap-6">
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 text-glow-pink">✨</div>
+                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 text-glow-pink">
+                  <FiTruck size={20} />
+                </div>
                 <div>
-                  <h4 className="font-bold mb-2">Expert Curation</h4>
-                  <p className="text-white/40 text-sm">Every device on our platform is hand-tested and selected for its quality, technology, and skin-safety.</p>
+                  <h4 className="font-bold mb-2">Hand to Hand Delivery</h4>
+                  <p className="text-white/40 text-sm">Our dedicated concierge team ensures personalized, direct delivery to your hands for absolute privacy and comfort.</p>
                 </div>
               </div>
             </div>

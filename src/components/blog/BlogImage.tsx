@@ -42,7 +42,7 @@ export default function BlogImage({
     // We prioritize mediaKey. If missing, we fallback to index + 100 pattern.
     // e.g., index 0 -> blog_img_100
     const key = mediaKey || `blog_img_${index + 100}`;
-    const { mediaUrl: cloudinaryUrl } = useSiteMedia(key, 'https://yavuzceliker.github.io/sample-images/image-1021.jpg');
+    const { mediaUrl: cloudinaryUrl } = useSiteMedia(key, 'https://images.unsplash.com/photo-1594322436404-5a0526db4d13?auto=format&fit=crop&q=80&w=1000');
 
     return (
         <Image

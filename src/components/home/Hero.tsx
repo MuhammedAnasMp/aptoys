@@ -59,7 +59,7 @@ export default function Hero() {
             </div>
 
             {/* Hero Image Mockup (Optional/Decorative) */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-32 bg-gradient-to-t from-space-black to-transparent z-20" />
+
         </section >
     );
 }
