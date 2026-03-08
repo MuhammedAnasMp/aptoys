@@ -53,8 +53,12 @@ export default function Navbar() {
                         />
                     </div>
                     <div className="hidden md:block">
-                        {/* :TODO uncomment after logo is ready <span className="text-xl font-bold tracking-tighter">AdultPlay<span className="text-neon-purple">Toys</span></span> */}
-                        <p className="text-[10px] uppercase tracking-widest text-white/50 leading-none">Future Wellness</p>
+                        {
+                            process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ?
+                                <p className="text-[10px] uppercase tracking-widest text-white/50 leading-none">Future Wellness</p>
+                                :
+                                <span className="text-xl font-bold tracking-tighter">AdultPlay<span className="text-neon-purple">Toys</span></span>
+                        }
                     </div>
                 </Link>
                 {/* Desktop Links */}

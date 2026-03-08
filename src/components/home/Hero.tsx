@@ -26,7 +26,8 @@ export default function Hero() {
                         Private. Premium. Future Wellness.
                     </span>
                     <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-8 leading-[0.9]">
-                        {/* :TODO uncomment after logo is ready Elevated Adult <br /> */}
+
+                        {process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? 'AdultPlaytoys' : ''}
                         <span className="bg-clip-text text-transparent bg-gradient-to-r from-neon-purple via-glow-pink to-electric-blue">Wellness Tech.</span>
                     </h1>
                     <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">

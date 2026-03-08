@@ -17,13 +17,11 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
 
-  // :TODO uncomment after logo is ready
-  // title: "AdultPlayToys.in | Private. Premium. Future Wellness.",
-  // description: "Next-generation private wellness tech brand. Discreet delivery guaranteed.",
-  // keywords: ["wellness", "premium toys", "discreet delivery", "future wellness"],
 
-  description: "Discover the future of wellness with Adlply. Premium, tech-forward adult wellness products with guaranteed discreet delivery across India. Join our private community for intimate health and tech discussions.",
-  keywords: ["adult wellness", "premium wellness tech", "discreet delivery India", "biotech wellness", "intimacy tech", "private wellness community", "wellness tech India"],
+  title: process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
+  description: process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
+  keywords: process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
+
   authors: [{ name: "Adlply Echo System" }],
   creator: "Adlply",
   publisher: "Adlply",

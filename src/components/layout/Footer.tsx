@@ -18,7 +18,9 @@ export default function Footer() {
                                 className="object-contain p-0.5"
                             />
                         </div>
-                        {/* :TODO uncomment after logo is ready <span className="text-lg font-bold tracking-tighter text-white group-hover:text-neon-purple transition-colors">AdultPlay<span className="text-neon-purple">Toys</span></span> */}
+                        {process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? <></> :
+                            <span className="text-lg font-bold tracking-tighter text-white group-hover:text-neon-purple transition-colors">AdultPlayToys<span className="text-neon-purple">Toys</span></span>
+                        }
                     </Link>
                     <p className="text-white/40 text-sm leading-relaxed mb-10 pr-4">
                         Premium wellness technology, delivered with 100% discretion. Directly imported globally to ensure the fairest price points in India.
@@ -67,7 +69,9 @@ export default function Footer() {
             </div>
 
             <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-                {/* :TODO uncomment after logo is ready <p className="text-white/30 text-[10px] uppercase tracking-widest">© 2026 AdultPlayToys.in. All Rights Reserved.</p> */}
+                {process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? <></> :
+                    <p className="text-white/30 text-[10px] uppercase tracking-widest">© 2026 AdultPlayToys.in. All Rights Reserved.</p>
+                }
                 <div className="flex gap-6">
                     <Link href="#" className="text-white/30 text-[10px] uppercase tracking-widest hover:text-white transition-colors">Terms of Service</Link>
                     <Link href="/privacy-policy" className="text-white/30 text-[10px] uppercase tracking-widest hover:text-white transition-colors">Privacy Policy</Link>

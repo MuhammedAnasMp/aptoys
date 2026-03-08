@@ -8,18 +8,6 @@ import { useSiteMedia } from "@/hooks/useSiteMedia";
 export default function ParallaxIcons() {
     const { scrollYProgress } = useScroll();
 
-
-    // const { mediaUrl: toy1 } = useSiteMedia('home_toy_scroll_1', '');
-    // const { mediaUrl: toy2 } = useSiteMedia('home_toy_scroll_1', '');
-    // const { mediaUrl: toy3 } = useSiteMedia('home_toy_scroll_1', '');
-    // const { mediaUrl: toy4 } = useSiteMedia('home_toy_scroll_1', '');
-    // const { mediaUrl: toy5 } = useSiteMedia('home_toy_scroll_1', '');
-    // const { mediaUrl: toy6 } = useSiteMedia('home_toy_scroll_1', '');
-    // const { mediaUrl: toy7 } = useSiteMedia('home_toy_scroll_1', '');
-    // const { mediaUrl: toy8 } = useSiteMedia('home_toy_scroll_1', '');
-    // const { mediaUrl: toy9 } = useSiteMedia('home_toy_scroll_1', '');
-    // const { mediaUrl: toy10 } = useSiteMedia('home_toy_scroll_1', '');
-
     const { mediaUrl: toy1 } = useSiteMedia('home_toy_scroll_1', '');
     const { mediaUrl: toy2 } = useSiteMedia('home_toy_scroll_2', '');
     const { mediaUrl: toy3 } = useSiteMedia('home_toy_scroll_3', '');
