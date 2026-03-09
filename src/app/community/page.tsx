@@ -4,9 +4,9 @@ import CommunityClient from "./CommunityClient";
 
 export const metadata: Metadata = {
     title: "Echo System | Private Wellness Community",
-    description: "Join the Adlply Echo System. A private community discussing future wellness, biotechnology, and the intersection of engineering and intimacy in India.",
+    description: "Join the AdultPlayToys Echo System. A private community discussing future wellness, biotechnology, and the intersection of engineering and intimacy in India.",
     openGraph: {
-        title: "Adlply Echo System Community",
+        title: "AdultPlayToys Echo System Community",
         description: "Join the conversation. Discuss the future of wellness tech.",
         type: "website",
     }
@@ -24,7 +24,7 @@ export default async function CommunityPage() {
                 __html: JSON.stringify({
                     "@context": "https://schema.org",
                     "@type": "ForumWebPage",
-                    "name": "Adlply Community Echo System",
+                    "name": "AdultPlayToys Community Echo System",
                     "mainEntity": {
                         "@type": "ItemList",
                         "itemListElement": threads.map((thread: any, index: number) => ({

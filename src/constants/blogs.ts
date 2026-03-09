@@ -1,13 +1,13 @@
 export const staticBlogs = [
     {
         id: "static-1",
-        title: "The Vision Behind Adlply",
-        slug: "vision-behind-adlply",
+        title: "The Vision Behind AdultPlayToys",
+        slug: "vision-behind-adultplaytoys",
         author: "Founder",
         created_at: "2026-01-01T12:00:00Z",
         reading_time: 4,
         category: "Philosophy",
-        content: "Adlply was born from a desire to merge high-end aesthetics with personal wellness. We believe that the objects we interact with should be as beautiful as they are functional.",
+        content: "AdultPlayToys was born from a desire to merge high-end aesthetics with personal wellness. We believe that the objects we interact with should be as beautiful as they are functional.",
         thumbnail: "https://res.cloudinary.com/dyt8amitd/image/upload/site_media/blog_img_100",
         mediaKey: "blog_img_100"
     },
@@ -43,7 +43,7 @@ export const staticBlogs = [
         created_at: "2026-01-03T12:00:00Z",
         reading_time: 6,
         category: "Intimacy",
-        content: "In a world obsessed with speed, true intimacy begins with slowing down. Anticipation transforms ordinary moments into electric experiences. A lingering glance, a soft whisper, the gentle brush of fingertips—these are the rituals that awaken deeper connection. At Adlply, we believe sensuality is not about excess, but about presence. When you allow desire to unfold slowly, every sensation becomes richer, deeper, unforgettable.",
+        content: "In a world obsessed with speed, true intimacy begins with slowing down. Anticipation transforms ordinary moments into electric experiences. A lingering glance, a soft whisper, the gentle brush of fingertips—these are the rituals that awaken deeper connection. At AdultPlayToys, we believe sensuality is not about excess, but about presence. When you allow desire to unfold slowly, every sensation becomes richer, deeper, unforgettable.",
         thumbnail: "https://res.cloudinary.com/dyt8amitd/image/upload/site_media/blog_img_103",
         mediaKey: "blog_img_103"
     },
@@ -160,7 +160,7 @@ export const staticBlogs = [
         created_at: "2026-01-12T12:00:00Z",
         reading_time: 6,
         category: "Philosophy",
-        content: "Luxury wellness is evolving beyond aesthetics. Modern consumers seek experiences that combine beauty, privacy, and emotional well-being. Brands that embrace discretion, sustainability, and thoughtful design are shaping the future of intimate lifestyle products. At Adlply, we see intimacy not as indulgence—but as a form of personal care.",
+        content: "Luxury wellness is evolving beyond aesthetics. Modern consumers seek experiences that combine beauty, privacy, and emotional well-being. Brands that embrace discretion, sustainability, and thoughtful design are shaping the future of intimate lifestyle products. At AdultPlayToys, we see intimacy not as indulgence—but as a form of personal care.",
         thumbnail: "https://res.cloudinary.com/dyt8amitd/image/upload/site_media/blog_img_112",
         mediaKey: "blog_img_112"
     }

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     description: "Explore our curated collection of luxury adult wellness tech. From app-controlled devices to body-safe silicone essentials, all with confidential shipping across India. Discover biotech-engineered pleasure.",
     keywords: ["premium wellness products", "luxury adult tech", "app controlled toys", "body safe wellness India", "discreet delivery wellness toys", "biotech wellness devices"],
     openGraph: {
-        title: "Shop Premium Wellness Tech | Adlply",
+        title: "Shop Premium Wellness Tech | AdultPlayToys",
         description: "Future-forward wellness products with confidential shipping across India.",
         type: "website",
     }

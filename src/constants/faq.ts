@@ -17,7 +17,7 @@ export const faqData: FAQCategory[] = [
         category: "Shipping & Delivery",
         icon: React.createElement(FiTruck, { className: "text-electric-blue" }),
         questions: [
-            { q: "Is the delivery discreet?", a: "Absolutely. All orders are shipped in plain, unmarked brown boxes with no mention of 'Adlply' or the contents on the exterior. The sender name will be a generic corporate entity to ensure total privacy." },
+            { q: "Is the delivery discreet?", a: "Absolutely. All orders are shipped in plain, unmarked brown boxes with no mention of '' or the contents on the exterior. The sender name will be a generic corporate entity to ensure total privacy." },
             { q: "How long does shipping take?", a: "Standard shipping takes 3-5 business days depending on your location. Express shipping is available for major metropolitan areas (1-2 business days)." },
             { q: "Can I track my order?", a: "Yes, once your order is dispatched, you will receive a tracking link via email and SMS to monitor your shipment in real-time." }
         ]
@@ -36,7 +36,7 @@ export const faqData: FAQCategory[] = [
         icon: React.createElement(FiHelpCircle, { className: "text-neon-purple" }),
         questions: [
             { q: "How is my data stored?", a: "We use military-grade encryption to protect your personal information. We never sell your data to third parties and follow strict GDPR/CCPA guidelines." },
-            { q: "Will 'Adlply' show up on my bank statement?", a: "No. To maintain your privacy, the billing name on your statement will appear as a discreet corporate name, not 'Adlply'." }
+            { q: "Will 'AdultPlayToys' show up on my bank statement?", a: "No. To maintain your privacy, the billing name on your statement will appear as a discreet corporate name, not 'AdultPlayToys'." }
         ]
     },
     {
