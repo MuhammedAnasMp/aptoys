@@ -1,6 +1,14 @@
 import { staticBlogs } from "@/constants/blogs";
 
-const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
+const formatUrl = (url: string | undefined, defaultUrl: string) => {
+    if (!url) return defaultUrl;
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        return `https://${url}`;
+    }
+    return url;
+};
+
+const API_BASE_URL = `${formatUrl(process.env.NEXT_PUBLIC_API_URL, 'https://aptoys.vercel.app')}/api`;
 
 export async function getBlogs() {
     try {
