@@ -9,6 +9,7 @@ import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/layout/CartDrawer";
 import AnalyticsTracker from "@/components/layout/AnalyticsTracker";
 import LiveSalesDashboard from "./live-analytics/page";
+import { Analytics } from "@vercel/analytics/next";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -99,6 +100,7 @@ export default function RootLayout({
             }}
           />
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );
