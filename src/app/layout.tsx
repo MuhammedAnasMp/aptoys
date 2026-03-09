@@ -28,6 +28,7 @@ const domainUrl = getDomainUrl();
 export const metadata: Metadata = {
 
 
+
   title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
   description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
   keywords: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
