@@ -15,7 +15,7 @@ export default function Navbar() {
 
     useEffect(() => {
         const updateCount = () => {
-            const likedItems = JSON.parse(localStorage.getItem("adlply_wishlist") || "[]");
+            const likedItems = JSON.parse(localStorage.getItem("adultplaytoys_wishlist") || "[]");
             setLikedCount(likedItems.length);
         };
 
@@ -54,13 +54,11 @@ export default function Navbar() {
                     </div>
                     <div className="hidden md:block">
                         {
-                            process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ?
+                            process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" &&
+                            <>
+                                <span className="text-xl font-bold tracking-tighter">AdultPlay<span className="text-neon-purple">Toys</span></span>
                                 <p className="text-[10px] uppercase tracking-widest text-white/50 leading-none">Future Wellness</p>
-                                :
-                                <>
-                                    <span className="text-xl font-bold tracking-tighter">AdultPlay<span className="text-neon-purple">Toys</span></span>
-                                    <p className="text-[10px] uppercase tracking-widest text-white/50 leading-none">Future Wellness</p>
-                                </>
+                            </>
                         }
                     </div>
                 </Link>

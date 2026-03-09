@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FiShield, FiZap, FiHeart, FiDroplet } from "react-icons/fi";
 
 export const metadata: Metadata = {
-    title: "Expert Wellness Guide | Adlply - Understanding Adult Innovation",
+    title: "Expert Wellness Guide | AdultPlayToys - Understanding Adult Innovation",
     description: "Your comprehensive guide to modern intimate wellness. Learn about material safety, product types, and how to choose the right technology for your body.",
     keywords: "sex toy guide india, body safe silicone toys, how to choose vibrators, adult wellness education, intimate health tech",
 };
@@ -81,7 +81,7 @@ export default function WellnessGuide() {
                             </div>
                             <div>
                                 <h4 className="text-white font-bold mb-3 uppercase tracking-wider text-sm">Step 2: Check the Material</h4>
-                                <p>If it doesn't say "Medical Grade Silicone," be cautious. At Adlply, we only curate the highest tier of body-safe materials to ensure zero irritation and long-term durability.</p>
+                                <p>If it doesn't say "Medical Grade Silicone," be cautious. At AdultPlayToys, we only curate the highest tier of body-safe materials to ensure zero irritation and long-term durability.</p>
                             </div>
                             <div>
                                 <h4 className="text-white font-bold mb-3 uppercase tracking-wider text-sm">Step 3: Consider the Ritual</h4>

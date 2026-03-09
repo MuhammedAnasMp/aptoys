@@ -3,10 +3,10 @@ import FAQClient from "./FAQClient";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Intelligence Hub | Adlply Support & FAQ",
-    description: "Everything you need to know about discreet shipping, secure payments, and premium product safety at Adlply. Your hub for private wellness intelligence.",
+    title: "Intelligence Hub | AdultPlayToys Support & FAQ",
+    description: "Everything you need to know about discreet shipping, secure payments, and premium product safety at AdultPlayToys. Your hub for private wellness intelligence.",
     openGraph: {
-        title: "Adlply Intelligence Hub | FAQ",
+        title: "AdultPlayToys Intelligence Hub | FAQ",
         description: "Your discreet guide to premium wellness, privacy, and secure delivery.",
         type: "website",
     }

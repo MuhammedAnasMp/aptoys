@@ -16,37 +16,46 @@ const outfit = Outfit({
   variable: "--font-outfit",
 });
 
+const getDomainUrl = () => {
+  let url = process.env.NEXT_PUBLIC_DOMAIN || 'https://aptoys.vercel.app';
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = `https://${url}`;
+  }
+  return url;
+};
+const domainUrl = getDomainUrl();
+
 export const metadata: Metadata = {
 
 
-  title: process.env.NEXT_PUBLIC_DOMAIN !== 'http://localhost:3000' ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
-  description: process.env.NEXT_PUBLIC_DOMAIN !== 'http://localhost:3000' ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
-  keywords: process.env.NEXT_PUBLIC_DOMAIN !== 'http://localhost:3000' ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
+  title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
+  description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
+  keywords: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
 
-  authors: [{ name: "Adlply Echo System" }],
-  creator: "Adlply",
-  publisher: "Adlply",
+  authors: [{ name: "AdultPlayToys Echo System" }],
+  creator: "AdultPlayToys",
+  publisher: "AdultPlayToys",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_DOMAIN || 'https://aptoys.vercel.app'),
+  metadataBase: new URL(domainUrl),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: "Adlply | Premium Adult Wellness Tech",
-    description: "Future-forward wellness products with confidential shipping across India.",
-    url: process.env.NEXT_PUBLIC_DOMAIN || 'https://aptoys.vercel.app',
-    siteName: 'Adlply',
+    title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
+    description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
+    url: domainUrl,
+    siteName: 'AdultPlayToys',
     locale: 'en_IN',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Adlply | Premium Adult Wellness Tech",
-    description: "Future-forward wellness products with confidential shipping across India.",
+    title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
+    description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
   },
   icons: {
     icon: '/icon.png',
@@ -83,9 +92,9 @@ export default function RootLayout({
               __html: JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "Organization",
-                "name": "Adlply",
-                "url": process.env.NEXT_PUBLIC_DOMAIN || "https://aptoys.vercel.app",
-                "logo": `${process.env.NEXT_PUBLIC_DOMAIN || "https://aptoys.vercel.app"}/logo.png`,
+                "name": "AdultPlayToys",
+                "url": domainUrl,
+                "logo": `${domainUrl}/logo.png`,
                 "description": "Premium tech-forward adult wellness brand focused on privacy and innovation.",
                 "sameAs": [
                   `${process.env.NEXT_PUBLIC_INSTAGRAM_URL}`,

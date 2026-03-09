@@ -47,7 +47,7 @@ export default function LiveSalesDashboard() {
             const p = await getProducts();
             setProducts(p);
 
-            const saved = localStorage.getItem("adlply_live_sales_v4");
+            const saved = localStorage.getItem("adultplaytoys_live_sales_v4");
             if (saved) {
                 setSales(JSON.parse(saved));
             } else {
@@ -69,7 +69,7 @@ export default function LiveSalesDashboard() {
                     };
                 });
                 setSales(seed);
-                localStorage.setItem("adlply_live_sales_v4", JSON.stringify(seed));
+                localStorage.setItem("adultplaytoys_live_sales_v4", JSON.stringify(seed));
             }
         };
         fetchInitialData();
@@ -96,7 +96,7 @@ export default function LiveSalesDashboard() {
 
             setSales(prev => {
                 const updated = [...prev, newSale].slice(-5000); // Keep last 5000 for depth
-                localStorage.setItem("adlply_live_sales_v4", JSON.stringify(updated));
+                localStorage.setItem("adultplaytoys_live_sales_v4", JSON.stringify(updated));
                 return updated;
             });
         }, 3000 + Math.random() * 5000); // New sale every 3-8 seconds (Very High Demand)
@@ -349,9 +349,6 @@ export default function LiveSalesDashboard() {
                 <div className="text-center bg-gradient-to-t from-white/5 to-transparent p-12 rounded-[40px] border border-white/5">
                     <FiLock className="mx-auto text-neon-purple mb-6" size={48} />
                     <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tighter uppercase italic">Your Secret is Safe.</h2>
-                    {/* <p className="max-w-2xl mx-auto text-white/40 mb-10 text-lg">
-                        Adlply uses 256-bit military-grade encryption for all transactions. We appear as <span className="text-white font-bold italic">"ADL-BILLING"</span> on your statement.
-                    </p> */}
                     <div className="flex flex-col sm:flex-row justify-center gap-6">
                         <button className="neon-button px-10 py-5 text-sm uppercase font-black tracking-widest">
                             Shop Discreetly Now

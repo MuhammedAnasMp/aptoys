@@ -25,7 +25,7 @@ export default function WishlistPage() {
 
     useEffect(() => {
         const fetchWishlist = async () => {
-            const likedIds = JSON.parse(localStorage.getItem("adlply_wishlist") || "[]");
+            const likedIds = JSON.parse(localStorage.getItem("adultplaytoys_wishlist") || "[]");
             if (likedIds.length === 0) {
                 setWishlist([]);
                 setLoading(false);

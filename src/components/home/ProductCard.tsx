@@ -31,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     const { addToCart } = useCart();
 
     useEffect(() => {
-        const likedItems = JSON.parse(localStorage.getItem("adlply_wishlist") || "[]");
+        const likedItems = JSON.parse(localStorage.getItem("adultplaytoys_wishlist") || "[]");
         setIsLiked(likedItems.map(String).includes(String(product.id)));
     }, [product.id]);
 
@@ -61,7 +61,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     const toggleLike = async (e: React.MouseEvent) => {
         e.stopPropagation();
-        const likedItems = JSON.parse(localStorage.getItem("adlply_wishlist") || "[]");
+        const likedItems = JSON.parse(localStorage.getItem("adultplaytoys_wishlist") || "[]");
         let newItems;
 
         if (isLiked) {
@@ -79,7 +79,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             }
         }
 
-        localStorage.setItem("adlply_wishlist", JSON.stringify(newItems));
+        localStorage.setItem("adultplaytoys_wishlist", JSON.stringify(newItems));
         setIsLiked(!isLiked);
         window.dispatchEvent(new CustomEvent("wishlistUpdate"));
     };

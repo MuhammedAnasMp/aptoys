@@ -3,10 +3,10 @@ import { getBlogs } from "@/lib/api";
 import BlogArchiveClient from "./BlogArchiveClient";
 
 export const metadata: Metadata = {
-    title: "Journal | Adlply - Future Wellness Insights",
-    description: "Explore deep insights into personal wellness, biotechnology, and the philosophy of future engineering. Read the latest entries from the Adlply journal.",
+    title: "Journal | AdultPlayToys - Future Wellness Insights",
+    description: "Explore deep insights into personal wellness, biotechnology, and the philosophy of future engineering. Read the latest entries from the AdultPlayToys journal.",
     openGraph: {
-        title: "Adlply Journal",
+        title: "AdultPlayToys Journal",
         description: "Future wellness, biotechnology, and engineering philosophy.",
         type: "website",
     }
@@ -24,16 +24,16 @@ export default async function BlogArchive() {
                 __html: JSON.stringify({
                     "@context": "https://schema.org",
                     "@type": "Blog",
-                    "name": "Adlply Journal",
+                    "name": "AdultPlayToys Journal",
                     "description": "Insights, engineering, and philosophy from the forefront of future wellness.",
                     "publisher": {
                         "@type": "Organization",
-                        "name": "Adlply"
+                        "name": "AdultPlayToys"
                     },
                     "blogPost": blogs.map((blog: any) => ({
                         "@type": "BlogPosting",
                         "headline": blog.title,
-                        "url": `https://adlply.com/blog/${blog.slug}`,
+                        "url": process.env.NEXT_PUBLIC_SITE_URL + `blog/${blog.slug}`,
                         "datePublished": blog.created_at,
                         "author": {
                             "@type": "Person",
