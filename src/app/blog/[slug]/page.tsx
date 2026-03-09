@@ -14,14 +14,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     if (!blog) {
         return {
-            title: "Article Not Found | Adlply Journal",
+            title: "Article Not Found | AdultPlayToys Journal",
         };
     }
 
     const description = blog.content.substring(0, 160) + "...";
 
     return {
-        title: `${blog.title} | Adlply - Future Wellness Journal`,
+        title: `${blog.title} | AdultPlayToys - Future Wellness Journal`,
         description: description,
         openGraph: {
             title: blog.title,
@@ -81,10 +81,10 @@ export default async function BlogPost({ params }: Props) {
                     },
                     "publisher": {
                         "@type": "Organization",
-                        "name": "Adlply",
+                        "name": "AdultPlayToys",
                         "logo": {
                             "@type": "ImageObject",
-                            "url": "https://adlply.com/logo.png"
+                            "url": process.env.NEXT_PUBLIC_SITE_URL + "logo.png"
                         }
                     },
                     "description": blog.content.substring(0, 200),

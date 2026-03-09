@@ -105,7 +105,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h4 className="font-bold mb-2">Secure Transactions</h4>
-                  <p className="text-white/40 text-sm">We use bank-level encryption for all payments. 'Adlply' will not appear on your credit card statement.</p>
+                  <p className="text-white/40 text-sm">We use bank-level encryption for all payments. 'AdultPlayToys' will not appear on your credit card statement.</p>
                 </div>
               </div>
               <div className="flex gap-6">
@@ -138,7 +138,7 @@ export default function Home() {
               +12k
             </div>
           </div>
-          <p className="text-white/30 text-sm italic italic">"Join the future of personal wellness in the Adlply Echo System across India."</p>
+          <p className="text-white/30 text-sm italic italic">"Join the future of personal wellness in the AdultPlayToys Echo System across India."</p>
         </div>
       </section>
     </div>

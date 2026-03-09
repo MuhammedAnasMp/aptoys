@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Privacy Policy | Adlply - Discreet & Secure Wellness",
-    description: "Your privacy is our priority. Learn about our discreet packaging, secure billing, and how we protect your intimate wellness data at Adlply.",
+    title: "Privacy Policy | AdultPlayToys - Discreet & Secure Wellness",
+    description: "Your privacy is our priority. Learn about our discreet packaging, secure billing, and how we protect your intimate wellness data at AdultPlayToys.",
     keywords: "discreet delivery, anonymous billing, secure adult toys, privacy policy adult wellness, data protection intimacy",
 };
 
@@ -24,16 +24,16 @@ export default function PrivacyPolicy() {
                             The Golden Rule: Total Discretion
                         </h2>
                         <p className="leading-relaxed">
-                            At Adlply, we understand that your personal choices in wellness are just that—personal. Our entire business model is built around the concept of "Intelligent Discretion." We don't just ship products; we ship confidence.
+                            At AdultPlayToys, we understand that your personal choices in wellness are just that—personal. Our entire business model is built around the concept of "Intelligent Discretion." We don't just ship products; we ship confidence.
                         </p>
                         <ul className="space-y-4 mt-6 list-none p-0">
                             <li className="flex gap-4">
                                 <span className="text-electric-blue font-bold">●</span>
-                                <span><strong className="text-white">Anonymous Packaging:</strong> Every order is shipped in plain, brown cardboard boxes with no branding, logos, or mention of "Adlply" or the contents.</span>
+                                <span><strong className="text-white">Anonymous Packaging:</strong> Every order is shipped in plain, brown cardboard boxes with no branding, logos, or mention of "AdultPlayToys" or the contents.</span>
                             </li>
                             <li className="flex gap-4">
                                 <span className="text-electric-blue font-bold">●</span>
-                                <span><strong className="text-white">Generic Billing:</strong> 'Adlply' will never appear on your credit card or bank statement. Charges will appear under a generic management name.</span>
+                                <span><strong className="text-white">Generic Billing:</strong> 'AdultPlayToys' will never appear on your credit card or bank statement. Charges will appear under a generic management name.</span>
                             </li>
                         </ul>
                     </section>
@@ -67,7 +67,7 @@ export default function PrivacyPolicy() {
                             We use bank-level AES-256 encryption for all data storage. Your intimate preferences are treated with the same level of security as a sovereign wealth fund's data.
                         </p>
                         <p>
-                            Adlply <strong className="text-white italic">never</strong> sells, rents, or shares your personal identity with third-party marketing firms. Your secrets are encrypted in our private cloud.
+                            AdultPlayToys <strong className="text-white italic">never</strong> sells, rents, or shares your personal identity with third-party marketing firms. Your secrets are encrypted in our private cloud.
                         </p>
                     </section>
 
@@ -83,7 +83,7 @@ export default function PrivacyPolicy() {
 
                     <div className="pt-12 border-t border-white/5 text-center">
                         <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30">Last Updated: March 2026</p>
-                        <p className="mt-4 text-xs">Questions about your privacy? Contact our Lead Protector at <span className="text-neon-purple underline cursor-pointer">privacy@adlply.in</span></p>
+                        <p className="mt-4 text-xs">Questions about your privacy? Contact our Lead Protector at <span className="text-neon-purple underline cursor-pointer">privacy@adultplaytoys.in</span></p>
                     </div>
                 </div>
             </div>
