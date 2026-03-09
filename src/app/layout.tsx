@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_DOMAIN || 'https://aptoys.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_GLOBE_URL || 'https://aptoys.vercel.app'),
   alternates: {
     canonical: '/',
   },
