@@ -31,7 +31,13 @@ export const metadata: Metadata = {
   title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
   description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
   keywords: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
+  title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
+  description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
+  keywords: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
 
+  authors: [{ name: "AdultPlayToys Echo System" }],
+  creator: "AdultPlayToys",
+  publisher: "AdultPlayToys",
   authors: [{ name: "AdultPlayToys Echo System" }],
   creator: "AdultPlayToys",
   publisher: "AdultPlayToys",
@@ -54,6 +60,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
+    description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
     title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
     description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
   },
