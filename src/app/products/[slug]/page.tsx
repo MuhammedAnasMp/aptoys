@@ -181,6 +181,12 @@ const SOCIAL_PROOF_REVIEWS = [
     { author: "Ajith Kumar", state: "Kerala", rating: 5, comment: "വളരെ നല്ല ഒരു വാങ്ങൽ ആയിരുന്നു. വിലയ്ക്ക് അനുസരിച്ച് qualityയും performanceഉം വളരെ നല്ലതാണ്.", is_verified: false, lang: "Malayalam" }
 ];
 
+type Media = {
+    media_type: "image" | "video";
+    file: string;
+}
+
+
 interface Product {
     id: string;
     name: string;
@@ -233,7 +239,7 @@ export default function ProductDetails() {
 
         setDisplayedReviews(prev => [...prev, ...selected]);
     };
-
+    const [previewMedia, setPreviewMedia] = useState<Media | null>(null);
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -277,7 +283,7 @@ export default function ProductDetails() {
     const today = new Date();
     const hours = today.getHours();
     const randomNumberWithHours = randomNumber + hours;
-    console.log(randomNumberWithHours);
+
 
     return (
         <div className="min-h-screen pb-24">
@@ -531,6 +537,7 @@ export default function ProductDetails() {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ delay: i * 0.05 }}
                                     className="aspect-square relative rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/5"
+                                    onClick={() => setPreviewMedia(img as any)} // <-- add this
                                 >
                                     {img.media_type === "video" ? (
                                         <div className="w-full h-full bg-space-black flex items-center justify-center">
@@ -551,6 +558,18 @@ export default function ProductDetails() {
                         </div>
                     </div>
                 </div>
+                {previewMedia && (
+                    <div
+                        className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+                        onClick={() => setPreviewMedia(null)} // close on click outside
+                    >
+                        {previewMedia && previewMedia?.media_type === "video" ? (
+                            <video src={previewMedia.file} autoPlay muted loop className="max-h-[90%] max-w-[90%] rounded-xl object-contain" />
+                        ) : (
+                            <img src={previewMedia.file} alt="preview" className="max-h-[90%] max-w-[90%] rounded-xl" />
+                        )}
+                    </div>
+                )}
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {displayedReviews.map((review) => (
@@ -576,7 +595,7 @@ export default function ProductDetails() {
                             {review.images && review.images.length > 0 && (
                                 <div className="flex gap-1.5 mb-4 flex-wrap">
                                     {review.images.map((img: any, idx: number) => (
-                                        <div key={idx} className="w-8 h-8 rounded-md overflow-hidden relative cursor-zoom-in border border-white/10 hover:border-neon-purple transition-colors">
+                                        <div onClick={() => setPreviewMedia(img as any)} key={idx} className="w-8 h-8 rounded-md overflow-hidden relative  cursor-zoom-in border border-white/10 hover:border-neon-purple transition-colors">
                                             {img.media_type === "video" ? (
                                                 <div className="w-full h-full bg-space-black flex items-center justify-center">
                                                     <FiPlay size={8} className="text-white/50" />

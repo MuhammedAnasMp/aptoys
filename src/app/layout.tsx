@@ -18,9 +18,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
 
 
-  title: process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
-  description: process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
-  keywords: process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
+  title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
+  description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
+  keywords: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
 
   authors: [{ name: "Adlply Echo System" }],
   creator: "Adlply",
