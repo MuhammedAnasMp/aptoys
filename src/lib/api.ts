@@ -1,6 +1,6 @@
 import { staticBlogs } from "@/constants/blogs";
 
-const formatUrl = (url: string | undefined, defaultUrl: string) => {
+export const formatUrl = (url: string | undefined, defaultUrl: string) => {
     if (!url) return defaultUrl;
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
         return `https://${url}`;
@@ -99,6 +99,27 @@ export async function getThreads() {
         return staticThreads;
     }
 }
+
+
+export async function getFaqs() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/faqs/`, {
+            next: { revalidate: 3600 }
+        });
+
+        if (!res.ok) return [];
+
+        return await res.json();
+    } catch (e) {
+        console.error("FAQ fetch error", e);
+        return [];
+    }
+}
+
+
+
+
+
 
 export async function createThread(data: { title: string; content: string; category: string; author: string }) {
     try {
