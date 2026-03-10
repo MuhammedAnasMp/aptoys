@@ -22,16 +22,16 @@ export default function ParallaxIcons() {
     const images = [toy1, toy2, toy3, toy4, toy5, toy6, toy7, toy8, toy9, toy10];
 
     const items = [
-        { src: images[0], alt: "parallax-toy_1", top: "10%", left: "5%", speed: 0.1, size: 100 },
+        { src: images[0], alt: "parallax-toy_1", top: "10%", left: "5%", speed: 0.1, size: 150 },
         { src: images[1], alt: "parallax-toy_2", top: "20%", left: "90%", speed: 0.2, size: 140 },
-        { src: images[2], alt: "parallax-toy_3", top: "40%", left: "10%", speed: 0.15, size: 80 },
+        { src: images[2], alt: "parallax-toy_3", top: "40%", left: "10%", speed: 0.15, size: 120 },
         { src: images[3], alt: "parallax-toy_4", top: "60%", left: "85%", speed: 0.25, size: 70 },
-        { src: images[4], alt: "parallax-toy_5", top: "80%", left: "5%", speed: 0.18, size: 150 },
+        { src: images[4], alt: "parallax-toy_5", top: "84%", left: "5%", speed: 0.18, size: 150 },
         { src: images[5], alt: "parallax-toy_6", top: "30%", left: "80%", speed: 0.3, size: 135 },
         { src: images[6], alt: "parallax-toy_7", top: "50%", left: "90%", speed: 0.12, size: 110 },
         { src: images[7], alt: "parallax-toy_8", top: "70%", left: "10%", speed: 0.22, size: 75 },
-        { src: images[8], alt: "parallax-toy_9", top: "90%", left: "85%", speed: 0.14, size: 65 },
-        { src: images[9], alt: "parallax-toy_10", top: "100%", left: "15%", speed: 0.19, size: 160 },
+        { src: images[8], alt: "parallax-toy_9", top: "90%", left: "85%", speed: 0.14, size: 120 },
+        { src: images[9], alt: "parallax-toy_10", top: "93%", left: "30%", speed: 0.19, size: 160 },
     ];
 
     return (

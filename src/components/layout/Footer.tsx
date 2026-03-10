@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaInstagram, FaFacebook, FaGlobe } from "react-icons/fa";
 import WhatsAppCTA from "./WhatsAppCTA";
+import TelegramCTA from "./TelegramCTA";
 
 export default function Footer() {
     return (
@@ -64,8 +65,17 @@ export default function Footer() {
                     <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Support</h4>
                     <p className="text-white/50 text-sm mb-4">Discreet Delivery Guaranteed.</p>
                     <p className="text-white/50 text-sm mb-6">Available 24/7 for wellness enquiries.</p>
-                    <div className="max-w-[160px] h-11">
-                        <WhatsAppCTA variant="inline" />
+                    <div className="flex flex-col gap-3 max-w-[160px]">
+                        {process.env.NEXT_PUBLIC_SHOW_WHATSAPP !== "false" && (
+                            <div className="h-11">
+                                <WhatsAppCTA variant="inline" />
+                            </div>
+                        )}
+                        {process.env.NEXT_PUBLIC_SHOW_TELEGRAM !== "false" && (
+                            <div className="h-11">
+                                <TelegramCTA variant="inline" />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

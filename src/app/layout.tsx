@@ -5,10 +5,10 @@ import Navbar from "@/components/layout/Navbar";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import WhatsAppCTA from "@/components/layout/WhatsAppCTA";
+import TelegramCTA from "@/components/layout/TelegramCTA";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/layout/CartDrawer";
 import AnalyticsTracker from "@/components/layout/AnalyticsTracker";
-import LiveSalesDashboard from "./live-analytics/page";
 import { Analytics } from "@vercel/analytics/next";
 
 const outfit = Outfit({
@@ -74,8 +74,8 @@ export default function RootLayout({
           </main>
           <Footer />
           <MobileNav />
-          <WhatsAppCTA />
-          <LiveSalesDashboard />
+          {process.env.NEXT_PUBLIC_SHOW_WHATSAPP !== "false" && <WhatsAppCTA />}
+          {process.env.NEXT_PUBLIC_SHOW_TELEGRAM !== "false" && <TelegramCTA isWhatsAppVisible={process.env.NEXT_PUBLIC_SHOW_WHATSAPP !== "false"} />}
           {/* Organization Structured Data */}
           <script
             type="application/ld+json"

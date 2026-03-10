@@ -30,7 +30,7 @@ export default function Hero() {
                         {process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? 'AdultPlaytoys ' : ''}
 
 
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-neon-purple via-glow-pink to-electric-blue">Wellness Tech.</span>
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-neon-purple via-glow-pink to-electric-blue">Wellness</span>
                     </h1>
                     <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
                         Discover the premium standard of modern intimacy. Discreetly delivered innovations for your personal well-being, powered by biotech and engineering excellence.

@@ -64,10 +64,10 @@ export default function Navbar() {
                 </Link>
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-8">
-                    {["Home", "Shop", "Blog", "Community", "FAQ"].map((item) => (
+                    {["Home", "Shop", "Demand", "Blog", "Community", "FAQ"].map((item) => (
                         <Link
                             key={item}
-                            href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                            href={item === "Home" ? "/" : item === "Demand" ? "/live-analytics" : `/${item.toLowerCase()}`}
                             className="text-sm font-medium text-white/70 hover:text-neon-purple transition-colors relative group"
                         >
                             {item}
@@ -126,10 +126,10 @@ export default function Navbar() {
                         exit={{ opacity: 0, y: -20 }}
                         className="absolute top-full left-0 right-0 bg-[#0B0F19]/95 backdrop-blur-2xl border-b border-white/10 md:hidden p-8 flex flex-col gap-6"
                     >
-                        {["Home", "Shop", "Blog", "Community", "FAQ", "Account"].map((item) => (
+                        {["Home", "Shop", "Demand", "Blog", "Community", "FAQ", "Account"].map((item) => (
                             <Link
                                 key={item}
-                                href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                                href={item === "Home" ? "/" : item === "Demand" ? "/live-analytics" : `/${item.toLowerCase()}`}
                                 className="text-2xl font-bold hover:text-neon-purple transition-colors"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
