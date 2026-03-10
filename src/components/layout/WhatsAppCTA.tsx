@@ -6,7 +6,7 @@ import { FaWhatsapp } from "react-icons/fa";
 interface WhatsAppCTAProps {
     productName?: string;
     productId?: string;
-    variant?: 'sticky' | 'inline';
+    variant?: 'sticky' | 'inline' | 'menu-item';
 }
 
 export default function WhatsAppCTA({ productName, productId, variant = 'sticky' }: WhatsAppCTAProps) {
@@ -18,6 +18,7 @@ export default function WhatsAppCTA({ productName, productId, variant = 'sticky'
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
     const isInline = variant === 'inline';
+    const isMenuItem = variant === 'menu-item';
 
     return (
         <motion.button
@@ -49,16 +50,20 @@ export default function WhatsAppCTA({ productName, productId, variant = 'sticky'
             className={`
                 ${isInline
                     ? "w-full h-full flex items-center justify-center gap-2 glass-card hover:bg-[#25D366] hover:text-white transition-all text-[#25D366] font-bold text-sm"
-                    : "fixed bottom-24 right-6 md:bottom-8 md:right-8 z-40 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(37,211,102,0.4)] transition-shadow hover:shadow-[0_0_30px_rgba(37,211,102,0.6)]"
+                    : isMenuItem
+                        ? "w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(37,211,102,0.3)] transition-shadow hover:shadow-[0_0_20px_rgba(37,211,102,0.5)]"
+                        : "fixed bottom-24 right-6 md:bottom-8 md:right-8 z-40 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(37,211,102,0.4)] transition-shadow hover:shadow-[0_0_30px_rgba(37,211,102,0.6)]"
                 }
             `}
         >
-            <FaWhatsapp size={isInline ? 18 : 32} />
+            <FaWhatsapp size={isInline ? 18 : isMenuItem ? 24 : 32} />
             {isInline && <span>WhatsApp</span>}
-            <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-            </span>
+            {!isMenuItem && (
+                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+                </span>
+            )}
         </motion.button>
     );
 }

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Hero() {
     return (
-        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-6 pt-12">
+        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 pt-4 md:pt-12">
             {/* Background Animated Gradients */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-neon-purple/20 blur-[120px] rounded-full animate-pulse" />
@@ -25,22 +25,22 @@ export default function Hero() {
                     <span className="inline-block px-4 py-1.5 rounded-full glass-card text-[10px] uppercase tracking-[0.3em] font-bold text-neon-purple mb-6 border-neon-purple/30">
                         Private. Premium. Future Wellness.
                     </span>
-                    <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-8 leading-[0.9]">
+                    <h1 className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 leading-[1.1] md:leading-[0.9]">
 
                         {process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? 'AdultPlaytoys ' : ''}
 
 
                         <span className="bg-clip-text text-transparent bg-gradient-to-r from-neon-purple via-glow-pink to-electric-blue">Wellness</span>
                     </h1>
-                    <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    <p className="text-base sm:text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed md:leading-relaxed">
                         Discover the premium standard of modern intimacy. Discreetly delivered innovations for your personal well-being, powered by biotech and engineering excellence.
                     </p>
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-                        <Link href="/shop" className="neon-button px-10 py-4 text-sm group">
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+                        <Link href="/shop" className="neon-button px-8 md:px-10 py-3 md:py-4 text-sm group w-full md:w-auto text-center">
                             Explore Collection
-                            <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                            <FiArrowRight className="inline-block ml-2 group-hover:translate-x-1 transition-transform" />
                         </Link>
-                        <Link href="/philosophy" className="px-10 py-4 text-sm font-bold glass-card glass-card-hover">
+                        <Link href="/philosophy" className="px-8 md:px-10 py-3 md:py-4 text-sm font-bold glass-card glass-card-hover w-full md:w-auto text-center">
                             Our Philosophy
                         </Link>
                     </div>
@@ -50,7 +50,7 @@ export default function Hero() {
                 <motion.div
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="mt-20 flex flex-wrap justify-center gap-4 md:gap-12"
+                    className="mt-12 md:mt-20 flex flex-wrap justify-center gap-3 md:gap-12"
                 >
                     {["Discreet Packaging", "Premium Quality", "Secure Payments", "Fast Shipping"].map((text) => (
                         <div key={text} className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-white/30 font-bold">

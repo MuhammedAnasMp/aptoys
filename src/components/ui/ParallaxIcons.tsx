@@ -48,8 +48,8 @@ export default function ParallaxIcons() {
                             left: item.left,
                             y,
                             rotate,
-                            width: item.size,
-                            height: item.size,
+                            width: `clamp(${item.size * 0.4}px, 15vw, ${item.size}px)`,
+                            height: `clamp(${item.size * 0.4}px, 15vw, ${item.size}px)`,
                             willChange: "transform",
                         }}
                         className="absolute select-none opacity-[0.2]"

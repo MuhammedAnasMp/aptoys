@@ -4,8 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
-import WhatsAppCTA from "@/components/layout/WhatsAppCTA";
-import TelegramCTA from "@/components/layout/TelegramCTA";
+import ContactMenu from "@/components/layout/ContactMenu";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/layout/CartDrawer";
 import AnalyticsTracker from "@/components/layout/AnalyticsTracker";
@@ -74,8 +73,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <MobileNav />
-          {process.env.NEXT_PUBLIC_SHOW_WHATSAPP !== "false" && <WhatsAppCTA />}
-          {process.env.NEXT_PUBLIC_SHOW_TELEGRAM !== "false" && <TelegramCTA isWhatsAppVisible={process.env.NEXT_PUBLIC_SHOW_WHATSAPP !== "false"} />}
+          <ContactMenu />
           {/* Organization Structured Data */}
           <script
             type="application/ld+json"
