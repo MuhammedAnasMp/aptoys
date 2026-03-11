@@ -131,7 +131,7 @@ export default function LiveSalesDashboard() {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-[#04060B] py-24 px-6 md:px-12 relative overflow-hidden text-white">
+        <div className="min-h-screen bg-[#04060B] py-12 px-6 md:px-12 relative overflow-hidden text-white">
             <div className="absolute top-0 right-0 w-[60%] h-[60%] bg-neon-purple/5 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-electric-blue/5 blur-[150px] rounded-full translate-y-1/2 -translate-x-1/2" />
 
@@ -158,9 +158,9 @@ export default function LiveSalesDashboard() {
                         </span>
                         Live Velocity
                     </div>
-                    <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                         <h1 className="text-5xl md:text-8xl font-black tracking-tighter max-w-4xl leading-[0.9]">National <span className="bg-clip-text text-transparent bg-gradient-to-r from-neon-purple to-electric-blue">Trust.</span></h1>
-                        <div className="flex flex-col items-end gap-3">
+                        <div className="flex flex-col items-center gap-3">
                             <div className="glass-card px-6 py-3 border-neon-purple/20 bg-neon-purple/5 text-neon-purple font-bold text-xs flex items-center gap-3 animate-pulse">
                                 <FiZap size={16} />
                                 DEMAND IS CURRENTLY CRITICAL
@@ -266,28 +266,7 @@ export default function LiveSalesDashboard() {
                             </div>
                         </section>
 
-                        {/* Price Integrity Section - NEW */}
-                        <section className="glass-card p-10 md:p-12 bg-gradient-to-r from-neon-purple/5 to-transparent border-neon-purple/10">
-                            <div className="flex flex-col md:flex-row gap-10 items-center">
-                                <div className="w-24 h-24 shrink-0 rounded-full bg-white/5 flex items-center justify-center text-neon-purple border border-white/10">
-                                    <FiTrendingUp size={48} className="rotate-180" />
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase italic">The Direct Advantage.</h3>
-                                    <p className="text-white/50 leading-relaxed text-sm">
-                                        Why are our prices significantly lower than other sellers? It's simple logistics. We monitor real-time demand across India. Once we hit our bulk order quotas, we import directly from global manufacturing hubs. This "Reach & Release" model allows us to bypass high retail markups, passing 100% of the savings directly to you.
-                                    </p>
-                                    <div className="flex gap-6 mt-6">
-                                        <div className="flex items-center gap-2 text-[10px] font-bold text-electric-blue uppercase tracking-widest">
-                                            <FiZap /> Zero Middlemen
-                                        </div>
-                                        <div className="flex items-center gap-2 text-[10px] font-bold text-electric-blue uppercase tracking-widest">
-                                            <FiShoppingCart /> Bulk Import Efficiency
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+
                     </div>
 
                     {/* Live Ticker Feed */}

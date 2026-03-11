@@ -1,8 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
-import { FiShoppingCart, FiHeart, FiEye } from "react-icons/fi";
-import { useCart } from "@/context/CartContext";
+import { FiHeart } from "react-icons/fi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useMemo } from "react";
@@ -25,10 +24,8 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
     const router = useRouter();
-    const [isHovered, setIsHovered] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const { addToCart } = useCart();
 
     useEffect(() => {
         const likedItems = JSON.parse(localStorage.getItem("adultplaytoys_wishlist") || "[]");
@@ -111,7 +108,6 @@ export default function ProductCard({ product }: ProductCardProps) {
     const handleMouseLeave = () => {
         x.set(0);
         y.set(0);
-        setIsHovered(false);
     };
 
     return (
@@ -123,11 +119,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            onMouseEnter={() => setIsHovered(true)}
             onClick={handleCardClick}
             className="relative group perspective-1000 cursor-pointer"
         >
-            <div className="glass-card p-4 h-full flex flex-col transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(168,85,247,0.2)]">
+            <div className="glass-card p-2 h-full flex flex-col transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(168,85,247,0.2)]">
                 {/* Badges */}
                 <div className="absolute top-6 left-6 z-20 flex flex-col gap-2">
                     {product.is_famous && (
@@ -174,63 +169,40 @@ export default function ProductCard({ product }: ProductCardProps) {
                             </div>
                         )}
                     </AnimatePresence>
-                    {/* Quick Actions */}
-                    <div className={`absolute inset-0 bg-space-black/40 backdrop-blur-sm flex items-center justify-center gap-4 transition-all duration-300 ${isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                addToCart({
-                                    id: product.id,
-                                    name: product.name,
-                                    price: product.price,
-                                    image: product.image || "",
-                                    slug: product.slug
-                                });
-                            }}
-                            className="w-10 h-10 rounded-full bg-white text-space-black flex items-center justify-center hover:bg-neon-purple hover:text-white transition-colors"
-                        >
-                            <FiShoppingCart size={18} />
-                        </button>
-                        <div className="w-10 h-10 rounded-full bg-white text-space-black flex items-center justify-center hover:bg-electric-blue hover:text-white transition-colors">
-                            <FiEye size={18} />
-                        </div>
-                        <button
-                            onClick={toggleLike}
-                            className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${isLiked ? "bg-glow-pink text-white" : "bg-white text-space-black hover:bg-glow-pink hover:text-white"}`}
-                        >
-                            <FiHeart size={18} fill={isLiked ? "currentColor" : "none"} />
-                        </button>
-                    </div>
+
+                    {/* Wishlist Button - ALWAYS VISIBLE / Subtle */}
+                    <button
+                        onClick={toggleLike}
+                        className={`absolute top-4 right-4 z-30 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 ${isLiked ? "bg-glow-pink text-white shadow-[0_0_15px_rgba(236,72,153,0.5)]" : "bg-white/5 text-white/50 border border-white/10 hover:bg-white/20 hover:text-white"}`}
+                    >
+                        <FiHeart size={18} fill={isLiked ? "currentColor" : "none"} />
+                    </button>
                 </div>
 
                 {/* Info */}
-                <div className="flex-grow">
+                <div className="flex-grow flex flex-col">
                     <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-bold text-lg tracking-tight group-hover:text-neon-purple transition-colors leading-tight">
+                        <h3 className="font-bold text-lg tracking-tight group-hover:text-neon-purple transition-colors leading-tight max-w-[80%]">
                             {product.name}
                         </h3>
-                        <div className="text-white/40 text-[10px] font-bold flex items-center gap-1">
-                            <span className="text-neon-purple">★</span> {product.rating}
+                        <div className="flex flex-col gap-1 items-end">
+                            <div className="text-white/40 text-[10px] font-bold flex items-center gap-1">
+                                <span className="text-neon-purple">★</span> {product.rating}
+                            </div>
+                            <div className="text-[10px] uppercase tracking-widest text-white/30 font-bold">
+                                <span className="text-electric-blue/50  whitespace-nowrap inline-flex ">● {product.sales_count}+ Sold</span>
+
+                            </div>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="text-neon-purple font-black text-xl">₹{product.price}</div>
-                        {product.discount_price && (
-                            <div className="text-white/30 line-through text-sm">₹{product.discount_price}</div>
-                        )}
-                    </div>
-
-                    <div className="pt-4 border-t border-white/5 flex items-center justify-between mt-auto">
-                        <div className="text-[10px] uppercase tracking-widest text-white/40 font-bold">
-                            <span className="text-electric-blue animate-pulse">●</span> {product.sales_count}+ Sold
+                    <div className="flex items-center justify-between mt-auto">
+                        <div className="flex items-center gap-3">
+                            <div className="text-neon-purple font-black text-xl">₹{product.price}</div>
+                            {product.discount_price && (
+                                <div className="text-white/30 line-through text-sm">₹{product.discount_price}</div>
+                            )}
                         </div>
-                        <button
-                            onClick={(e) => { e.stopPropagation(); router.push(`/products/${product.slug}`); }}
-                            className="text-[10px] uppercase tracking-widest font-black text-neon-purple hover:underline"
-                        >
-                            Order
-                        </button>
                     </div>
                 </div>
             </div>

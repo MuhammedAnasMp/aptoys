@@ -56,7 +56,7 @@ export default function WishlistPage() {
         <main className="min-h-screen bg-[#0B0F19] text-white">
             <Navbar />
 
-            <section className="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+            <section className="py-12 px-6 md:px-12 max-w-7xl mx-auto">
                 <div className="mb-12">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}

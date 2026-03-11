@@ -5,21 +5,53 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronDown, FiSearch } from "react-icons/fi";
 import { faqData } from "@/constants/faq";
 
-export default function FAQClient() {
+
+
+export default function FAQClient({ apiFaqs = [] }) {
     const [activeItem, setActiveItem] = useState<string | null>(null);
     const [search, setSearch] = useState("");
 
-    const filteredFaqs = useMemo(() => {
-        if (!search) return faqData;
+    // Convert API FAQs into same structure as faqData
+    const apiGrouped = useMemo(() => {
+        const grouped: Record<string, any[]> = {};
 
-        return faqData.map(cat => ({
-            ...cat,
-            questions: cat.questions.filter(item =>
-                item.q.toLowerCase().includes(search.toLowerCase()) ||
-                item.a.toLowerCase().includes(search.toLowerCase())
-            )
-        })).filter(cat => cat.questions.length > 0);
-    }, [search]);
+        apiFaqs.forEach((faq: any) => {
+            if (!grouped[faq.category]) {
+                grouped[faq.category] = [];
+            }
+
+            grouped[faq.category].push({
+                q: faq.question,
+                a: faq.answer
+            });
+        });
+
+        return Object.entries(grouped).map(([category, questions]) => ({
+            category,
+            questions
+        }));
+    }, [apiFaqs]);
+
+    // Combine static + API FAQs
+    const allFaqs = useMemo(() => {
+        return [...apiGrouped, ...faqData]; // API first
+    }, [apiGrouped]);
+
+    // Apply search filtering
+    const filteredFaqs = useMemo(() => {
+        if (!search) return allFaqs;
+
+        return allFaqs
+            .map(cat => ({
+                ...cat,
+                questions: cat.questions.filter((item: any) =>
+                    item.q.toLowerCase().includes(search.toLowerCase()) ||
+                    item.a.toLowerCase().includes(search.toLowerCase())
+                )
+            }))
+            .filter(cat => cat.questions.length > 0);
+
+    }, [search, allFaqs]);
 
     return (
         <div className="max-w-4xl mx-auto">
@@ -44,7 +76,7 @@ export default function FAQClient() {
                     filteredFaqs.map((cat) => (
                         <div key={cat.category}>
                             <h2 className="text-[9px] uppercase tracking-[0.4em] font-black text-white/20 mb-6 flex items-center gap-3">
-                                {cat.icon}
+                                {/* {cat.icon} */}
                                 <span className="ml-1">{cat.category}</span>
                                 <div className="flex-grow h-[1px] bg-white/5" />
                             </h2>

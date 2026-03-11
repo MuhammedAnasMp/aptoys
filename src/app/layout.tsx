@@ -4,11 +4,10 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
-import WhatsAppCTA from "@/components/layout/WhatsAppCTA";
+import ContactMenu from "@/components/layout/ContactMenu";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/layout/CartDrawer";
 import AnalyticsTracker from "@/components/layout/AnalyticsTracker";
-import LiveSalesDashboard from "./live-analytics/page";
 import { Analytics } from "@vercel/analytics/next";
 
 const outfit = Outfit({
@@ -19,9 +18,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
 
 
-  title: process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
-  description: process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
-  keywords: process.env.NEXT_PUBLIC_DOMAIN === 'http://localhost:3000' ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
+  title: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "AdultPlayToys.in | Private. Premium. Future Wellness." : '',
+  description: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? "Next-generation private wellness tech brand. Discreet delivery guaranteed." : '',
+  keywords: process.env.NEXT_PUBLIC_IS_ADULT_SITE === "true" ? ["wellness", "premium toys", "discreet delivery", "future wellness"] : [],
 
   authors: [{ name: "Adlply Echo System" }],
   creator: "Adlply",
@@ -31,7 +30,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_DOMAIN || 'https://aptoys.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_GLOBE_URL || 'https://aptoys.vercel.app'),
   alternates: {
     canonical: '/',
   },
@@ -74,8 +73,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <MobileNav />
-          <WhatsAppCTA />
-          <LiveSalesDashboard />
+          <ContactMenu />
           {/* Organization Structured Data */}
           <script
             type="application/ld+json"
