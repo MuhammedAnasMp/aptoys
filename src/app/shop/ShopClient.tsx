@@ -184,7 +184,7 @@ export default function ShopClient() {
         <div className="min-h-screen py-12 px-6 md:px-12 bg-[#0B0F19]">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <header className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                <header className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div>
                         <span className="text-neon-purple text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block underline-glow">The Shop</span>
                         <TextMask
@@ -246,7 +246,7 @@ export default function ShopClient() {
                 </header>
 
                 {/* Category Slider - Full Width */}
-                <div className="mb-12 w-full relative group/slider">
+                <div className="mb-6 w-full relative group/slider">
                     {/* Left Arrow */}
                     <AnimatePresence>
                         {showLeftArrow && (

@@ -461,7 +461,7 @@ export default function ProductDetails() {
                         </div>
 
                         {/* Trust Badges */}
-                        <div className="grid grid-cols-3 gap-6 mt-12 pt-12 border-t border-white/5">
+                        <div className="grid grid-cols-3 gap-6  pt-12 border-t border-white/5">
                             <div className="flex flex-col items-center text-center gap-2">
                                 <FiShield className="text-neon-purple" size={24} />
                                 <span className="text-[8px] uppercase tracking-widest text-white/40 font-bold">1 Year Warranty</span>
@@ -634,7 +634,7 @@ export default function ProductDetails() {
             </section>
 
             {/* WhatsApp Floating Sync */}
-            <WhatsAppCTA productName={product.name} productId={product.id} />
+            {/* <WhatsAppCTA productName={product.name} productId={product.id} /> */}
         </div>
     );
 }

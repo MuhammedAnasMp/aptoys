@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { FiX, FiShoppingCart, FiMinus, FiPlus, FiTrash2, FiShoppingBag, FiArrowRight } from "react-icons/fi";
+import { FiX, FiShoppingCart, FiMinus, FiPlus, FiTrash2, FiShoppingBag, FiArrowRight, FiCreditCard } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
@@ -148,10 +148,17 @@ export default function CartDrawer() {
                                 <div className="grid grid-cols-1 gap-4">
                                     <button
                                         onClick={handleWhatsAppCheckout}
-                                        className="flex items-center justify-center gap-3 h-14 w-full bg-[#25D366] text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-[#20bd5c] transition-all shadow-[0_0_20px_rgba(37,211,102,0.2)]"
+                                        className="flex items-center justify-center gap-3 h-14 w-full bg-[#25D366]/20 border border-[#25D366]/30 text-[#25D366] font-black text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-[#25D366]/30 transition-all"
                                     >
-                                        <FaWhatsapp size={20} /> Checkout via WhatsApp <FiArrowRight />
+                                        <FaWhatsapp size={20} /> Checkout via WhatsApp
                                     </button>
+                                    <Link
+                                        href="/checkout"
+                                        onClick={() => setIsCartOpen(false)}
+                                        className="flex items-center justify-center gap-3 h-14 w-full bg-white text-black font-black text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-white/90 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                                    >
+                                        <FiCreditCard size={20} /> Pay Online Now <FiArrowRight />
+                                    </Link>
                                     <button
                                         onClick={() => setIsCartOpen(false)}
                                         className="text-[10px] text-center text-white/20 uppercase tracking-[0.3em] font-bold hover:text-white transition-colors"

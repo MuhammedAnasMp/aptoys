@@ -1,32 +1,15 @@
 'use client';
 
 import { useEffect, Suspense, useRef } from 'react';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 function AnalyticsContent() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const router = useRouter();
     const hasLoggedReferral = useRef<string | null>(null);
 
     useEffect(() => {
-        // 1. Log General Site Visit
-        const logVisit = async () => {
-            try {
-                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/site-visits/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        path: pathname + (searchParams.toString() ? '?' + searchParams.toString() : ''),
-                        referrer: document.referrer || 'Direct',
-                    }),
-                });
-            } catch (error) {
-                console.error('Analytics error:', error);
-            }
-        };
-
-        // 2. Handle Referral Tracking (?from=somecode)
+        // Handle Referral Tracking (?from=somecode)
         const handleReferral = async () => {
             const referralCode = searchParams.get('from');
             if (referralCode && hasLoggedReferral.current !== referralCode) {
@@ -52,7 +35,7 @@ function AnalyticsContent() {
                         }),
                     });
 
-                    // 3. Clean up URL without reload
+                    // Clean up URL without reload
                     const params = new URLSearchParams(searchParams.toString());
                     params.delete('from');
                     const newQueryString = params.toString();
@@ -65,7 +48,6 @@ function AnalyticsContent() {
             }
         };
 
-        logVisit();
         handleReferral();
     }, [pathname, searchParams]);
 

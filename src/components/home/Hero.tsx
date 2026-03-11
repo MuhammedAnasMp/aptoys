@@ -22,8 +22,8 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <span className="inline-block px-4 py-1.5 rounded-full glass-card text-[10px] uppercase tracking-[0.3em] font-bold text-neon-purple mb-6 border-neon-purple/30">
-                        Private. Premium. Future Wellness.
+                    <span className="inline-block px-4 py-1.5 rounded-full glass-card text-[10px] uppercase tracking-[0.3em] font-black text-neon-purple mb-6 border-neon-purple/30">
+                        Private. Premium. Since 2015.
                     </span>
                     <h1 className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 leading-[1.1] md:leading-[0.9]">
 

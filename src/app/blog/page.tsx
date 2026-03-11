@@ -16,7 +16,7 @@ export default async function BlogArchive() {
     const blogs = await getBlogs();
 
     return (
-        <section className="min-h-screen py-24 px-6 md:px-12 bg-[#0B0F19]">
+        <section className="min-h-screen py-12 px-6 md:px-12 bg-[#0B0F19]">
             <BlogArchiveClient blogs={blogs} />
 
             {/* Structured Schema Data for the Archive */}

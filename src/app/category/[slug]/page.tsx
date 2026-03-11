@@ -12,7 +12,7 @@ export default function CategoryPage() {
     const categoryName = slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace("-", " ") : "Category";
 
     return (
-        <div className="min-h-screen py-24 px-6 md:px-12 bg-[#0B0F19]">
+        <div className="min-h-screen py-12 px-6 md:px-12 bg-[#0B0F19]">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-16">
                     <span className="text-electric-blue text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block">Categories / {categoryName}</span>
