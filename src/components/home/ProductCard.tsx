@@ -122,7 +122,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             onClick={handleCardClick}
             className="relative group perspective-1000 cursor-pointer"
         >
-            <div className="glass-card p-4 h-full flex flex-col transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(168,85,247,0.2)]">
+            <div className="glass-card p-2 h-full flex flex-col transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(168,85,247,0.2)]">
                 {/* Badges */}
                 <div className="absolute top-6 left-6 z-20 flex flex-col gap-2">
                     {product.is_famous && (

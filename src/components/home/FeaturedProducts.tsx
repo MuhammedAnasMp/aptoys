@@ -44,9 +44,9 @@ export default function FeaturedProducts() {
         .slice(0, 8);
 
     return (
-        <section className="py-24 px-6 md:px-12">
+        <section className="py-12 px-6 md:px-6 ">
             <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 pt-4">
+                <div className="flex flex-col md:flex-row justify-between items-start mb-12 gap-6 pt-4">
                     <div>
                         <span className="text-glow-pink text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block">Curated Selection</span>
                         <h2 className="text-3xl md:text-5xl font-bold tracking-tighter">Most Famous.</h2>
