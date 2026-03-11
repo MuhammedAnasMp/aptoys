@@ -197,17 +197,17 @@ export default function ShopClient() {
                     <div className="flex gap-4 relative">
                         <button
                             onClick={() => setIsFilterOpen(true)}
-                            className="glass-card px-8 py-5 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-white/70 hover:text-white hover:border-neon-purple/50 transition-all group"
+                            className="glass-card px-5 md:px-6 py-2.5 md:py-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 hover:text-white hover:border-neon-purple/50 transition-all group"
                         >
-                            <FiFilter className="text-neon-purple group-hover:scale-125 transition-transform" /> Filter
+                            <FiFilter className="text-neon-purple group-hover:scale-110 transition-transform" /> Filter
                         </button>
 
                         <div className="relative group">
                             <button
                                 onClick={() => setShowSortMenu(!showSortMenu)}
-                                className="glass-card px-8 py-5 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-white/70 hover:text-white hover:border-electric-blue/50 transition-all"
+                                className="glass-card px-5 md:px-6 py-2.5 md:py-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 hover:text-white hover:border-electric-blue/50 transition-all"
                             >
-                                Sort By: <span className="text-white">{sortBy.replace('-', ' ')}</span> <FiChevronDown className={`transition-transform duration-300 ${showSortMenu ? 'rotate-180' : ''}`} />
+                                <span className="hidden sm:inline">Sort By:</span> <span className="text-white">{sortBy.replace('-', ' ')}</span> <FiChevronDown className={`transition-transform duration-300 ${showSortMenu ? 'rotate-180' : ''}`} />
                             </button>
 
                             <AnimatePresence>
@@ -216,7 +216,7 @@ export default function ShopClient() {
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 10 }}
-                                        className="absolute top-full right-0 mt-4 w-56 glass-card z-50 p-2 overflow-hidden backdrop-blur-xl border-white/10"
+                                        className="absolute top-full right-0 mt-2 w-48 md:w-56 glass-card z-50 p-1.5 overflow-hidden backdrop-blur-xl border-white/10 shadow-2xl"
                                     >
                                         {[
                                             { id: 'newest', label: 'Newest Arrivals' },

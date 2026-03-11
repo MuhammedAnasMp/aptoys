@@ -2,10 +2,12 @@ import React from 'react'
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FiPackage, FiLock, FiTruck } from "react-icons/fi";
+import { useSiteMedia } from '@/hooks/useSiteMedia';
 function Trust() {
+    const { mediaUrl: heroImg } = useSiteMedia('trust_img_1', '');
     return (
         <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12 overflow-hidden">
-            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -14,7 +16,7 @@ function Trust() {
                 >
                     <div className="aspect-square rounded-[3rem] overflow-hidden glass-card border-white/10 relative">
                         <Image
-                            src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&q=80&w=1000"
+                            src={heroImg}
                             alt="Premium Quality Standards"
                             fill
                             className="object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 scale-110 group-hover:scale-100"

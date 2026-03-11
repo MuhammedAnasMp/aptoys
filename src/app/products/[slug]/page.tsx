@@ -302,11 +302,11 @@ export default function ProductDetails() {
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
 
                 {/* Left: Gallery */}
-                <div className="relative">
+                <div className="lg:sticky lg:top-28 h-fit self-start">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="sticky top-28 aspect-[4/5] rounded-[2rem] overflow-hidden glass-card border-white/10 relative"
+                        className="aspect-[4/5] rounded-[2rem] overflow-hidden glass-card border-white/10 relative"
                     >
                         <AnimatePresence mode="wait">
                             <motion.div
@@ -485,7 +485,7 @@ export default function ProductDetails() {
             {/* Reviews Section */}
             <section className="max-w-7xl mx-auto px-6 mt-24">
                 <div className="mb-12">
-                    <span className="text-glow-pink text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block">Social Proof</span>
+                    {/* <span className="text-glow-pink text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block">Social Proof</span> */}
                     <h2 className="text-3xl md:text-5xl font-black tracking-tighter">Verified Explorers.</h2>
                 </div>
 

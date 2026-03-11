@@ -103,9 +103,7 @@ export default function Navbar() {
                         )}
                     </button>
 
-                    <button className="hidden md:flex p-2 text-white/70 hover:text-white transition-colors">
-                        <FiUser size={22} />
-                    </button>
+
 
                     {/* Mobile Menu Toggle */}
                     <button
