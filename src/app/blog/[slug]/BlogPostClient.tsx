@@ -36,13 +36,13 @@ export default function BlogPostClient({ blog }: { blog: any }) {
             />
 
             <div className="max-w-4xl mx-auto px-6 pt-12">
-                <Link href="/blog" className="inline-flex items-center gap-2 text-white/30 hover:text-white mb-12 text-sm transition-colors group">
+                <Link href="/blog" className="inline-flex items-center gap-2 text-white/30 hover:text-white mb-6 text-sm transition-colors group">
                     <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                     Back to Journal
                 </Link>
 
                 {/* Article Header */}
-                <header className="mb-16">
+                <header className="mb-8 ">
                     <div className="flex items-center gap-4 mb-6">
                         <span className="bg-neon-purple px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">{blog.category || "Journal"}</span>
                         <span className="text-white/30 text-[10px] font-bold uppercase tracking-widest">
@@ -79,7 +79,7 @@ export default function BlogPostClient({ blog }: { blog: any }) {
                 </header>
 
                 {/* Hero Image */}
-                <div className="mb-16 aspect-video rounded-[3rem] overflow-hidden glass-card relative">
+                <div className="mb-16 aspect-video rounded-[3rem] rounded-[.5rem] overflow-hidden glass-card relative">
                     <BlogImage
                         thumbnail={blog.thumbnail}
                         mediaKey={blog.mediaKey}

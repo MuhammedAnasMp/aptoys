@@ -21,7 +21,7 @@ export default function BlogArchiveClient({ blogs }: { blogs: any[] }) {
 
     return (
         <div className="max-w-7xl mx-auto">
-            <div className="mb-20">
+            <div className="mb-12">
                 <span className="text-neon-purple text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block">Wellness Journal</span>
                 <h1 className="text-4xl md:text-8xl font-black tracking-tighter mb-4">The Journal.</h1>
                 <p className="text-white/40 max-w-xl text-lg">Insights, engineering, and philosophy from the forefront of future wellness.</p>
@@ -29,7 +29,7 @@ export default function BlogArchiveClient({ blogs }: { blogs: any[] }) {
 
             {/* Featured Card */}
             {featuredBlog ? (
-                <Link href={`/blog/${featuredBlog.slug}`} className="group relative block w-full h-[600px] mb-20 rounded-[3rem] overflow-hidden glass-card">
+                <Link href={`/blog/${featuredBlog.slug}`} className="group relative block w-full h-[600px] mb-12 rounded-[3rem] overflow-hidden glass-card">
                     <BlogImage
                         index={0}
                         thumbnail={featuredBlog.thumbnail}
