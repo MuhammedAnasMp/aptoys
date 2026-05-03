@@ -13,7 +13,7 @@ function OrderSuccessContent() {
 
     return (
         <div className="min-h-[70vh] flex items-center justify-center px-6">
-            <motion.div 
+            <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 className="max-w-md w-full bg-white/5 border border-white/10 rounded-3xl p-8 text-center space-y-8"
@@ -37,7 +37,7 @@ function OrderSuccessContent() {
                 </div>
 
                 <div className="space-y-4">
-                    <Link 
+                    <Link
                         href="/shop"
                         className="flex items-center justify-center gap-3 h-14 w-full bg-white text-black font-black text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-white/90 transition-all"
                     >
@@ -54,7 +54,7 @@ function OrderSuccessContent() {
 
 export default function OrderSuccessPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading</div>}>
             <OrderSuccessContent />
         </Suspense>
     );

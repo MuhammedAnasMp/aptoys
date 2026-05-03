@@ -174,7 +174,7 @@ export default function BundleDetails() {
                                             method: "POST",
                                             headers: { "Content-Type": "application/json" },
                                             body: JSON.stringify({
-                                                items_data: [{ name: `Bundle: ${bundle.name}`, quantity: 1, price: bundle.total_price }],
+                                                items_data: [{ id: bundle.id, name: `Bundle: ${bundle.name}`, quantity: 1, price: bundle.total_price }],
                                                 total_price: bundle.total_price
                                             })
                                         });

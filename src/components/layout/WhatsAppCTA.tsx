@@ -30,6 +30,7 @@ export default function WhatsAppCTA({ productName, productId, variant = 'sticky'
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             items_data: [{
+                                id: productId,
                                 name: productName || "General Enquiry",
                                 quantity: 1,
                                 price: "0"
