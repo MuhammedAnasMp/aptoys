@@ -41,8 +41,8 @@ export default function SupplierLoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-space-black flex items-center justify-center px-6 py-12">
-            <motion.div 
+        <div className="h-[calc(100vh-150px)] bg-space-black flex items-center justify-center px-6 ">
+            <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="w-full max-w-md"
@@ -62,7 +62,7 @@ export default function SupplierLoginPage() {
 
                     <form onSubmit={handleLogin} className="space-y-6 relative z-10">
                         {error && (
-                            <motion.div 
+                            <motion.div
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 className="p-4 bg-glow-pink/10 border border-glow-pink/20 rounded-xl flex items-center gap-3 text-glow-pink text-xs font-bold"
@@ -75,11 +75,11 @@ export default function SupplierLoginPage() {
                             <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 px-1">Username</label>
                             <div className="relative">
                                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20"><FiMail size={18} /></div>
-                                <input 
+                                <input
                                     type="text"
                                     required
                                     value={formData.username}
-                                    onChange={(e) => setFormData({...formData, username: e.target.value})}
+                                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                                     className="w-full bg-white/[0.03] border border-white/10 rounded-xl h-14 pl-12 pr-4 text-sm focus:border-neon-purple/50 outline-none transition-all"
                                     placeholder="Enter your username"
                                 />
@@ -90,18 +90,18 @@ export default function SupplierLoginPage() {
                             <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 px-1">Password</label>
                             <div className="relative">
                                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20"><FiLock size={18} /></div>
-                                <input 
+                                <input
                                     type="password"
                                     required
                                     value={formData.password}
-                                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                     className="w-full bg-white/[0.03] border border-white/10 rounded-xl h-14 pl-12 pr-4 text-sm focus:border-neon-purple/50 outline-none transition-all"
                                     placeholder="••••••••"
                                 />
                             </div>
                         </div>
 
-                        <button 
+                        <button
                             type="submit"
                             disabled={loading}
                             className="w-full h-14 bg-white text-black text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-white/90 transition-all flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-50"
