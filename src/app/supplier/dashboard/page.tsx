@@ -167,7 +167,7 @@ export default function SupplierDashboard() {
 
             if (response.ok) {
                 setUploadStatus({ type: 'success', message: data.message });
-                fetchProducts(token!);
+                fetchData(token!);
                 setTimeout(() => setShowUploadModal(false), 2000);
             } else {
                 setUploadStatus({ type: 'error', message: data.error || "Upload failed" });

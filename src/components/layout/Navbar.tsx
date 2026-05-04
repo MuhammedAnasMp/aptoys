@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiShoppingCart, FiSearch, FiMenu, FiX, FiUser, FiHeart } from "react-icons/fi";
 import { useCart } from "@/context/CartContext";
@@ -10,7 +11,10 @@ import { useCart } from "@/context/CartContext";
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
     const [likedCount, setLikedCount] = useState(0);
+    const router = useRouter();
     const { cartCount, setIsCartOpen } = useCart();
 
     useEffect(() => {
@@ -78,7 +82,10 @@ export default function Navbar() {
 
                 {/* Right Actions */}
                 <div className="flex items-center gap-4">
-                    <button className="p-2 text-white/70 hover:text-white transition-colors">
+                    <button 
+                        onClick={() => setIsSearchOpen(true)}
+                        className="p-2 text-white/70 hover:text-white transition-colors"
+                    >
                         <FiSearch size={22} />
                     </button>
 
@@ -134,6 +141,49 @@ export default function Navbar() {
                                 {item}
                             </Link>
                         ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            {/* Search Overlay */}
+            <AnimatePresence>
+                {isSearchOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-6"
+                    >
+                        <div 
+                            className="absolute inset-0 bg-[#0B0F19]/90 backdrop-blur-xl"
+                            onClick={() => setIsSearchOpen(false)}
+                        />
+                        <motion.div
+                            initial={{ y: -20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -20, opacity: 0 }}
+                            className="relative w-full max-w-2xl glass-card p-6 border-white/10"
+                        >
+                            <div className="flex items-center gap-4">
+                                <FiSearch size={24} className="text-neon-purple shrink-0" />
+                                <input
+                                    autoFocus
+                                    type="text"
+                                    placeholder="Search products, brands, or collections..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            router.push(`/shop?q=${encodeURIComponent(searchQuery)}`);
+                                            setIsSearchOpen(false);
+                                        }
+                                    }}
+                                    className="w-full bg-transparent border-none outline-none text-xl font-medium placeholder:text-white/20"
+                                />
+                                <button onClick={() => setIsSearchOpen(false)}>
+                                    <FiX size={24} className="text-white/30 hover:text-white" />
+                                </button>
+                            </div>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
