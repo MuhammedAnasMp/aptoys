@@ -11,11 +11,11 @@ interface TelegramCTAProps {
 }
 
 export default function TelegramCTA({ productName, productId, variant = 'sticky', isWhatsAppVisible = true }: TelegramCTAProps) {
-    const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/adultplaytoys";
-    
+    const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/ww";
+
     // We just use the custom base URL if configured, to allow directly opening a specific bot or user chat if required
     // Defaulting to the brand's Telegram link for simplicity
-    
+
     const isInline = variant === 'inline';
     const isMenuItem = variant === 'menu-item';
 
@@ -29,6 +29,7 @@ export default function TelegramCTA({ productName, productId, variant = 'sticky'
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             items_data: [{
+                                id: productId,
                                 name: productName ? `[Telegram] ${productName}` : "[Telegram] General Enquiry",
                                 quantity: 1,
                                 price: "0"

@@ -12,6 +12,7 @@ export default function CartDrawer() {
 
     const handleWhatsAppCheckout = async () => {
         const cartData = cart.map(item => ({
+            id: item.id,
             name: item.name,
             quantity: item.quantity,
             price: item.price
@@ -148,17 +149,23 @@ export default function CartDrawer() {
                                 <div className="grid grid-cols-1 gap-4">
                                     <button
                                         onClick={handleWhatsAppCheckout}
-                                        className="flex items-center justify-center gap-3 h-14 w-full bg-[#25D366]/20 border border-[#25D366]/30 text-[#25D366] font-black text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-[#25D366]/30 transition-all"
+                                        className="flex items-center justify-center gap-3 h-14 w-full bg-[#25D366] text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-[#1eb959] transition-all shadow-[0_10px_30px_rgba(37,211,102,0.2)]"
                                     >
                                         <FaWhatsapp size={20} /> Checkout via WhatsApp
                                     </button>
                                     <Link
                                         href="/checkout"
                                         onClick={() => setIsCartOpen(false)}
-                                        className="flex items-center justify-center gap-3 h-14 w-full bg-white text-black font-black text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-white/90 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                                        className="flex items-center justify-center gap-3 h-14 w-full bg-white/5 border border-white/10 text-white/50 font-black text-[10px] uppercase tracking-[0.2em] rounded-2xl hover:bg-white/10 transition-all"
                                     >
-                                        <FiCreditCard size={20} /> Pay Online Now <FiArrowRight />
+                                        <FiShoppingBag size={18} /> View Order Summary
                                     </Link>
+                                    <button
+                                         disabled
+                                         className="flex items-center justify-center gap-3 h-14 w-full bg-white/5 border border-white/10 text-white/20 font-black text-[10px] uppercase tracking-[0.2em] rounded-2xl cursor-not-allowed"
+                                     >
+                                         <FiCreditCard size={18} /> Online Payment (Coming Soon)
+                                     </button>
                                     <button
                                         onClick={() => setIsCartOpen(false)}
                                         className="text-[10px] text-center text-white/20 uppercase tracking-[0.3em] font-bold hover:text-white transition-colors"

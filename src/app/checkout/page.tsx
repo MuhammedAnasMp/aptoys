@@ -3,10 +3,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useCart } from "@/context/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiCreditCard, FiTruck, FiShoppingBag, FiArrowRight, FiCheckCircle, FiAlertCircle, FiSearch, FiChevronDown, FiMapPin, FiShield } from "react-icons/fi";
+import { FiCreditCard, FiTruck, FiShoppingBag, FiArrowRight, FiCheckCircle, FiAlertCircle, FiSearch, FiChevronDown, FiMapPin, FiShield, FiTrash2 } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import districtsData from "@/data/districts.json";
+import { useToast } from "@/context/ToastContext";
 
 const allDistricts = districtsData.districts;
 const uniqueStates = [...new Set(allDistricts.map(d => d.stateName))];
@@ -102,7 +104,8 @@ const SelectField = ({ label, name, value, options, onChange, onBlur, error, tou
 // --- Main Page Component ---
 
 export default function CheckoutPage() {
-    const { cart, cartTotal, clearCart } = useCart();
+    const { cart, cartTotal, clearCart, updateQuantity, removeFromCart } = useCart();
+    const { showToast } = useToast();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState<FormState>({
@@ -140,20 +143,57 @@ export default function CheckoutPage() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+    const handleWhatsAppCheckout = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const itemText = cart.map(item => `${item.quantity}x ${item.name} (₹${item.price})`).join("%0A");
+            
+            const message = `Hi Adlply, I'd like to place an order:%0A%0A` +
+                `*Items:*%0A${itemText}%0A%0A` +
+                `*Total:* ₹${cartTotal}%0A%0A` +
+                `I will share my shipping address here. Please confirm my order.`;
+
+            // 1. Log to backend (Simplified tracking)
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart-inquiries/`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    items_data: cart.map(item => ({
+                        id: item.id,
+                        name: item.name,
+                        quantity: item.quantity,
+                        price: item.price
+                    })),
+                    total_price: cartTotal
+                })
+            });
+
+            window.open(`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919876543210'}?text=${message}`, "_blank");
+        } catch (err) {
+            console.error("WhatsApp Checkout Error:", err);
+            const itemText = cart.map(item => `${item.quantity}x ${item.name} (₹${item.price})`).join("%0A");
+            const message = `Hi Adlply, I'd like to place an order:%0A%0A*Items:*%0A${itemText}%0A%0A*Total:* ₹${cartTotal}`;
+            window.open(`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919876543210'}?text=${message}`, "_blank");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const validate = (name: string, value: string) => {
         if (!value) return "Required";
         if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return "Invalid email";
         if (name === "phone" && !/^[6-9]\d{9}$/.test(value)) return "Invalid 10-digit number";
         if (name === "pincode") {
             if (!/^[1-9][0-9]{5}$/.test(value)) return "Invalid 6-digit pin";
-            
+
             // Validate pincode against selected state if state is present
             if (formData.state) {
                 const pincodeVal = parseInt(value);
-                const isValidForState = allDistricts.some(r => 
+                const isValidForState = allDistricts.some(r =>
                     r.stateName === formData.state && pincodeVal >= parseInt(r.pincodeStart) && pincodeVal <= parseInt(r.pincodeEnd)
                 );
-                
+
                 const stateHasData = allDistricts.some(r => r.stateName === formData.state);
                 if (stateHasData && !isValidForState) {
                     return `Not valid for ${formData.state}`;
@@ -167,7 +207,7 @@ export default function CheckoutPage() {
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
-        
+
         // Strip non-numeric from phone
         if (name === "phone") {
             const numericValue = value.replace(/\D/g, "").slice(0, 10);
@@ -175,7 +215,7 @@ export default function CheckoutPage() {
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
         }
-        
+
         // Reset cascading fields if needed
         if (name === "state") {
             setFormData(prev => ({ ...prev, state: value, district: "", city: "", pincode: "" }));
@@ -197,7 +237,7 @@ export default function CheckoutPage() {
     };
 
     const handlePincodeSelect = (pin: string) => {
-        const range = allDistricts.find(r => 
+        const range = allDistricts.find(r =>
             parseInt(pin) >= parseInt(r.pincodeStart) && parseInt(pin) <= parseInt(r.pincodeEnd)
         );
 
@@ -218,11 +258,11 @@ export default function CheckoutPage() {
         if (!formData.district) return [];
         const range = allDistricts.find(r => r.districtName === formData.district);
         if (!range) return [];
-        
+
         const suggestions = [];
         const start = parseInt(range.pincodeStart);
         const end = parseInt(range.pincodeEnd);
-        for(let i=0; i < 5; i++) {
+        for (let i = 0; i < 5; i++) {
             if (start + i <= end) {
                 suggestions.push((start + i).toString());
             }
@@ -235,7 +275,7 @@ export default function CheckoutPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         // Final Validation
         const newErrors: FormErrors = {};
         const newTouched: any = {};
@@ -291,7 +331,7 @@ export default function CheckoutPage() {
                         clearCart();
                         router.push(`/order-success?order_id=${data.order_id}`);
                     } else {
-                        alert("Verification failed. Please contact support.");
+                        showToast("Verification failed. Please contact support.", "error");
                     }
                 },
                 prefill: {
@@ -305,7 +345,7 @@ export default function CheckoutPage() {
             const rzp = new (window as any).Razorpay(options);
             rzp.open();
         } catch (err: any) {
-            alert(err.message);
+            showToast(err.message || "An unexpected error occurred", "error");
         } finally {
             setLoading(false);
         }
@@ -329,75 +369,81 @@ export default function CheckoutPage() {
     }
 
     return (
-        <div className="max-w-6xl mx-auto px-6 py-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                
+        <div className="max-w-5xl mx-auto px-6 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
                 {/* --- Left Column: Form --- */}
                 <div className="lg:col-span-12 xl:col-span-7 space-y-10">
                     <div className="space-y-4">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-purple/10 border border-neon-purple/20 text-neon-purple text-[10px] font-black uppercase tracking-widest">
                             <FiShield size={12} /> Secure Checkout
                         </div>
-                        <h1 className="text-4xl font-black uppercase tracking-tighter leading-none">
-                            Shipping <span className="text-white/10">Information</span>
+                        <h1 className="text-2xl font-gray-500 uppercase tracking-tighter leading-none">
+                            Checkout via <span className="text-[#25D366]">WhatsApp</span>
                         </h1>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-8">
+                    <form className="space-y-8 opacity-50 grayscale pointer-events-none">
+                        <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex items-center gap-3">
+                            <FiAlertCircle className="text-neon-purple" />
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">
+                                Shipping form is disabled. All details will be collected on WhatsApp.
+                            </p>
+                        </div>
                         {/* Section: Contact */}
                         <div className="space-y-6">
-                            <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/20 pb-2 border-b border-white/5">Contact Details</h3>
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 pb-2 border-b border-white/5">Contact Details</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <InputField label="Full Name" name="full_name" value={formData.full_name} onChange={handleInputChange} onBlur={handleBlur} error={errors.full_name} touched={touched.full_name} placeholder="John Doe" />
                                 <InputField label="Email Address" name="email" type="email" value={formData.email} onChange={handleInputChange} onBlur={handleBlur} error={errors.email} touched={touched.email} placeholder="john@example.com" />
                             </div>
-                            <InputField 
-                                label="Phone Number" 
-                                name="phone" 
-                                type="tel" 
-                                prefix="+91" 
-                                value={formData.phone} 
-                                onChange={handleInputChange} 
-                                onBlur={handleBlur} 
-                                error={errors.phone} 
-                                touched={touched.phone} 
-                                placeholder="9876543210" 
+                            <InputField
+                                label="Phone Number"
+                                name="phone"
+                                type="tel"
+                                prefix="+91"
+                                value={formData.phone}
+                                onChange={handleInputChange}
+                                onBlur={handleBlur}
+                                error={errors.phone}
+                                touched={touched.phone}
+                                placeholder="9876543210"
                             />
                         </div>
 
                         {/* Section: Shipping */}
                         <div className="space-y-6">
-                            <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/20 pb-2 border-b border-white/5">Delivery Address</h3>
-                            
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 pb-2 border-b border-white/5">Delivery Address</h3>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <SelectField 
-                                    label="State" 
-                                    name="state" 
-                                    value={formData.state} 
-                                    options={uniqueStates.sort()} 
-                                    onChange={handleInputChange} 
-                                    onBlur={handleBlur} 
-                                    error={errors.state} 
-                                    touched={touched.state} 
-                                    placeholder="Select State" 
+                                <SelectField
+                                    label="State"
+                                    name="state"
+                                    value={formData.state}
+                                    options={uniqueStates.sort()}
+                                    onChange={handleInputChange}
+                                    onBlur={handleBlur}
+                                    error={errors.state}
+                                    touched={touched.state}
+                                    placeholder="Select State"
                                 />
-                                <SelectField 
-                                    disabled={!formData.state} 
-                                    label="District" 
-                                    name="district" 
-                                    value={formData.district} 
-                                    options={formData.state ? allDistricts.filter(d => d.stateName === formData.state).map(d => d.districtName).sort() : []} 
-                                    onChange={handleInputChange} 
-                                    onBlur={handleBlur} 
-                                    error={errors.district} 
-                                    touched={touched.district} 
-                                    placeholder="Select District" 
+                                <SelectField
+                                    disabled={!formData.state}
+                                    label="District"
+                                    name="district"
+                                    value={formData.district}
+                                    options={formData.state ? allDistricts.filter(d => d.stateName === formData.state).map(d => d.districtName).sort() : []}
+                                    onChange={handleInputChange}
+                                    onBlur={handleBlur}
+                                    error={errors.district}
+                                    touched={touched.district}
+                                    placeholder="Select District"
                                 />
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <InputField label="City/Town" name="city" value={formData.city} onChange={handleInputChange} onBlur={handleBlur} error={errors.city} touched={touched.city} placeholder="Enter City" />
-                                
+
                                 {/* Pincode with Dropdown */}
                                 <div className="space-y-1.5 relative" ref={dropdownRef}>
                                     <div className="flex justify-between items-center px-1">
@@ -411,14 +457,14 @@ export default function CheckoutPage() {
                                         </AnimatePresence>
                                     </div>
                                     <div className="relative">
-                                        <input 
-                                            name="pincode" 
-                                            value={formData.pincode} 
-                                            onChange={(e) => { handleInputChange(e); setShowPincodeDropdown(true); }} 
-                                            onFocus={() => setShowPincodeDropdown(true)} 
-                                            onBlur={handleBlur} 
-                                            className={`w-full bg-white/[0.03] border ${touched.pincode && errors.pincode ? 'border-glow-pink/50' : 'border-white/10'} rounded-xl h-12 px-4 pr-10 text-sm focus:border-neon-purple/50 outline-none transition-all placeholder:text-white/10`} 
-                                            placeholder="XXXXXX" 
+                                        <input
+                                            name="pincode"
+                                            value={formData.pincode}
+                                            onChange={(e) => { handleInputChange(e); setShowPincodeDropdown(true); }}
+                                            onFocus={() => setShowPincodeDropdown(true)}
+                                            onBlur={handleBlur}
+                                            className={`w-full bg-white/[0.03] border ${touched.pincode && errors.pincode ? 'border-glow-pink/50' : 'border-white/10'} rounded-xl h-12 px-4 pr-10 text-sm focus:border-neon-purple/50 outline-none transition-all placeholder:text-white/10`}
+                                            placeholder="XXXXXX"
                                         />
                                         <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20"><FiSearch size={14} /></div>
                                     </div>
@@ -439,32 +485,75 @@ export default function CheckoutPage() {
 
                             <InputField label="Street Address" name="address" isTextArea value={formData.address} onChange={handleInputChange} onBlur={handleBlur} error={errors.address} touched={touched.address} placeholder="House/Flat No., Street, Landmark..." />
                         </div>
-
-                        <button disabled={loading} className="w-full h-16 bg-white text-black text-[13px] font-black uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-4 hover:bg-neon-purple hover:text-white transition-all shadow-xl active:scale-[0.98] disabled:opacity-50">
-                            {loading ? "Initializing Razorpay..." : <><FiCreditCard size={18} /> Pay ₹{cartTotal} <FiArrowRight size={18} /></>}
-                        </button>
                     </form>
+
+                    <div className="space-y-4">
+                        <button 
+                            type="button"
+                            onClick={handleWhatsAppCheckout}
+                            disabled={loading} 
+                            className="w-full h-14 bg-[#25D366] text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-full flex items-center justify-center gap-3 hover:bg-[#1eb959] transition-all shadow-xl active:scale-[0.98] disabled:opacity-50"
+                        >
+                            <FaWhatsapp size={20} /> {loading ? "Processing..." : "Checkout via WhatsApp"} <FiArrowRight size={16} />
+                        </button>
+                        
+                        <button 
+                            type="button"
+                            disabled 
+                            className="w-full h-14 bg-white/5 border border-white/10 text-white/30 text-[10px] font-black uppercase tracking-[0.2em] rounded-full flex items-center justify-center gap-3 cursor-not-allowed"
+                        >
+                            <FiCreditCard size={16} /> Online Payment (Coming Soon)
+                        </button>
+                    </div>
                 </div>
 
                 {/* --- Right Column: Summary --- */}
                 <div className="lg:col-span-12 xl:col-span-5 xl:sticky xl:top-24 space-y-8">
-                    <div className="bg-white/[0.02] border border-white/10 rounded-3xl p-8 space-y-8">
-                        <div className="flex items-center justify-between pb-6 border-b border-white/10">
-                            <h2 className="text-sm font-black uppercase tracking-widest text-white/50">Order Summary</h2>
-                            <span className="text-[10px] font-black bg-white/10 px-3 py-1 rounded-full text-white/40">{cart.length} ITEMS</span>
+                    <div className="bg-white/[0.02] border border-white/10 rounded-3xl p-6 space-y-6">
+                        <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                            <h2 className="text-xs font-black uppercase tracking-widest text-white/50">Order Summary</h2>
+                            <span className="text-[9px] font-black bg-white/10 px-3 py-1 rounded-full text-white/40">{cart.length} ITEMS</span>
                         </div>
 
-                        <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                        <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                             {cart.map((item) => (
-                                <div key={item.id} className="flex gap-5 items-center group">
-                                    <div className="w-16 h-16 rounded-2xl bg-white/5 relative overflow-hidden flex-shrink-0 border border-white/5">
+                                <div key={item.id} className="flex gap-5 items-start group">
+                                    <div className="w-20 h-24 rounded-2xl bg-white/5 relative overflow-hidden flex-shrink-0 border border-white/5">
                                         {item.image && <Image src={item.image} alt={item.name} fill className="object-cover opacity-60 group-hover:opacity-100 transition-opacity" />}
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                        <h4 className="text-xs font-black uppercase tracking-tight truncate">{item.name}</h4>
-                                        <p className="text-[10px] text-white/30 font-bold mt-1 uppercase tracking-widest">Qty: {item.quantity}</p>
+                                    <div className="flex-1 min-w-0 py-1">
+                                        <h4 className="text-[11px] font-black uppercase tracking-tight truncate mb-2">{item.name}</h4>
+                                        <div className="flex items-center gap-4">
+                                            <div className="flex items-center bg-white/5 rounded-lg border border-white/5 overflow-hidden">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                                    className="w-8 h-8 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all text-xs"
+                                                >
+                                                    -
+                                                </button>
+                                                <span className="w-8 text-center text-[10px] font-black tabular-nums">{item.quantity}</span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                                    className="w-8 h-8 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all text-xs"
+                                                >
+                                                    +
+                                                </button>
+                                            </div>
+
+                                            {/* delete icon  */}
+                                            <button
+                                                type="button"
+                                                onClick={() => removeFromCart(item.id)}
+                                                className="text-[9px] font-black uppercase tracking-widest text-[#FF4B4B]/40 hover:text-[#FF4B4B] transition-colors"
+                                            >
+                                                <FiTrash2 size={20} />
+                                            </button>
+
+                                        </div>
                                     </div>
-                                    <div className="text-sm font-black">₹{item.price * item.quantity}</div>
+                                    <div className="text-sm font-black py-1">₹{item.price * item.quantity}</div>
                                 </div>
                             ))}
                         </div>
@@ -480,10 +569,10 @@ export default function CheckoutPage() {
                             </div>
                             <div className="flex justify-between items-end pt-4">
                                 <div>
-                                    <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 mb-1">Total to Pay</p>
-                                    <span className="text-xs font-black uppercase tracking-widest">Grand Total</span>
+                                    <p className="text-[8px] font-black uppercase tracking-[0.2em] text-white/20 mb-1">Total to Pay</p>
+                                    <span className="text-[10px] font-black uppercase tracking-widest">Grand Total</span>
                                 </div>
-                                <span className="text-4xl font-black text-white tabular-nums tracking-tighter">₹{cartTotal}</span>
+                                <span className="text-2xl font-black text-white tabular-nums tracking-tighter">₹{cartTotal}</span>
                             </div>
                         </div>
                     </div>

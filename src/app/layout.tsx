@@ -6,6 +6,7 @@ import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import ContactMenu from "@/components/layout/ContactMenu";
 import { CartProvider } from "@/context/CartContext";
+import { ToastProvider } from "@/context/ToastContext";
 import CartDrawer from "@/components/layout/CartDrawer";
 import AnalyticsTracker from "@/components/layout/AnalyticsTracker";
 import { Analytics } from "@vercel/analytics/next";
@@ -65,38 +66,37 @@ export default function RootLayout({
         className={`${outfit.variable} font-outfit antialiased bg-space-black text-white`}
       >
         <CartProvider>
-          <Navbar />
-          <CartDrawer />
-          <AnalyticsTracker />
-          <main className="min-h-screen pt-20">
-            {children}
-          </main>
-          <Footer />
-          <MobileNav />
-          <ContactMenu />
-          {/* Organization Structured Data */}
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                "name": "Adlply",
-                "url": process.env.NEXT_PUBLIC_DOMAIN || "https://aptoys.vercel.app",
-                "logo": `${process.env.NEXT_PUBLIC_DOMAIN || "https://aptoys.vercel.app"}/logo.png`,
-                "description": "Premium tech-forward adult wellness brand focused on privacy and innovation.",
-                "sameAs": [
-                  `${process.env.NEXT_PUBLIC_INSTAGRAM_URL}`,
-                  `${process.env.NEXT_PUBLIC_FACEBOOK_URL}`,
-                  `${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`,
-                  `${process.env.NEXT_PUBLIC_GLOBE_URL}`,
-
-
-
-                ]
-              })
-            }}
-          />
+          <ToastProvider>
+            <Navbar />
+            <CartDrawer />
+            <AnalyticsTracker />
+            <main className="min-h-screen pt-20">
+              {children}
+            </main>
+            <Footer />
+            <MobileNav />
+            <ContactMenu />
+            {/* Organization Structured Data */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Organization",
+                  "name": "Adlply",
+                  "url": process.env.NEXT_PUBLIC_DOMAIN || "https://aptoys.vercel.app",
+                  "logo": `${process.env.NEXT_PUBLIC_DOMAIN || "https://aptoys.vercel.app"}/logo.png`,
+                  "description": "Premium tech-forward adult wellness brand focused on privacy and innovation.",
+                  "sameAs": [
+                    `${process.env.NEXT_PUBLIC_INSTAGRAM_URL}`,
+                    `${process.env.NEXT_PUBLIC_FACEBOOK_URL}`,
+                    `${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`,
+                    `${process.env.NEXT_PUBLIC_GLOBE_URL}`,
+                  ]
+                })
+              }}
+            />
+          </ToastProvider>
         </CartProvider>
         <Analytics />
       </body>

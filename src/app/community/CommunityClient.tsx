@@ -127,19 +127,21 @@ export default function CommunityClient({ initialThreads }: { initialThreads: an
                         <span className="text-electric-blue text-[9px] uppercase tracking-[0.4em] font-bold mb-2 block opacity-70">Echo System</span>
                         <h1 className="text-3xl md:text-7xl font-black mb-0 tracking-tight">Community</h1>
 
-                        <div className="mt-4 flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-                            {categories.map(cat => (
-                                <button
-                                    key={cat}
-                                    onClick={() => handleCategoryChange(cat)}
-                                    className={`px-4 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${selectedCategory === cat
-                                        ? 'bg-electric-blue text-white shadow-[0_0_15px_rgba(0,243,255,0.2)]'
-                                        : 'text-white/40 hover:text-white/60'
-                                        }`}
-                                >
-                                    {cat}
-                                </button>
-                            ))}
+                        <div className="mt-4 max-w-[calc(100vw-3rem)] md:max-w-none">
+                            <div className="flex gap-2 overflow-x-auto pb-4 no-scrollbar -mx-2 px-2 mask-fade-right flex-nowrap">
+                                {categories.map(cat => (
+                                    <button
+                                        key={cat}
+                                        onClick={() => handleCategoryChange(cat)}
+                                        className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all flex-shrink-0 border ${selectedCategory === cat
+                                            ? 'bg-electric-blue text-white border-electric-blue shadow-[0_0_15px_rgba(0,243,255,0.4)]'
+                                            : 'text-white/40 hover:text-white/60 border-white/5 hover:border-white/20'
+                                            }`}
+                                    >
+                                        {cat}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <button

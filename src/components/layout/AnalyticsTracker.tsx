@@ -11,7 +11,7 @@ function AnalyticsContent() {
     useEffect(() => {
         // Handle Referral Tracking (?from=somecode)
         const handleReferral = async () => {
-            const referralCode = searchParams.get('from');
+            const referralCode = searchParams.get('from') || searchParams.get('ref');
             if (referralCode && hasLoggedReferral.current !== referralCode) {
                 // Prevent duplicate logs for the same code in this session/render
                 hasLoggedReferral.current = referralCode;
@@ -38,6 +38,7 @@ function AnalyticsContent() {
                     // Clean up URL without reload
                     const params = new URLSearchParams(searchParams.toString());
                     params.delete('from');
+                    params.delete('ref');
                     const newQueryString = params.toString();
                     const newUrl = pathname + (newQueryString ? `?${newQueryString}` : '');
 

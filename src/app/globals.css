@@ -102,3 +102,7 @@ select:-webkit-autofill:focus {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.mask-fade-right {
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+}

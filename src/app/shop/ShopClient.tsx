@@ -164,11 +164,17 @@ export default function ShopClient() {
     }, []);
 
     const filteredProducts = products.filter(product => {
+        const searchQuery = searchParams.get('q')?.toLowerCase() || "";
+        const matchesSearch = !searchQuery || 
+            product.name.toLowerCase().includes(searchQuery) ||
+            product.slug.toLowerCase().includes(searchQuery) ||
+            product.categories.some(cat => cat.name.toLowerCase().includes(searchQuery));
+
         const matchesCategory = selectedCategory === "all" ||
             product.categories.some(cat => cat.slug === selectedCategory);
         const price = parseFloat(product.price.replace(/,/g, ''));
         const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
-        return matchesCategory && matchesPrice;
+        return matchesSearch && matchesCategory && matchesPrice;
     }).sort((a, b) => {
         const priceA = parseFloat(a.price.replace(/,/g, ''));
         const priceB = parseFloat(b.price.replace(/,/g, ''));

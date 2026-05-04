@@ -4,10 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { FiClock, FiUser, FiArrowLeft, FiShare2 } from "react-icons/fi";
+import { useToast } from "@/context/ToastContext";
 
 import BlogImage from "@/components/blog/BlogImage";
 
 export default function BlogPostClient({ blog }: { blog: any }) {
+    const { showToast } = useToast();
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
         stiffness: 100,
@@ -23,7 +25,7 @@ export default function BlogPostClient({ blog }: { blog: any }) {
             }).catch(console.error);
         } else {
             navigator.clipboard.writeText(window.location.href);
-            alert("Link copied to clipboard!");
+            showToast("Link copied to clipboard!", "success");
         }
     };
 

@@ -56,8 +56,23 @@ export default function Footer() {
                     <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Resources</h4>
                     <ul className="space-y-4">
                         <li><Link href="/philosophy" className="text-white/50 hover:text-neon-purple text-sm transition-colors">Philosophy</Link></li>
-                        {["Wellness Guide", "Blog", "Community", "FAQ", "Privacy Policy"].map(link => (
-                            <li key={link}><Link href={link === "Blog" ? "/blog" : link === "FAQ" ? "/faq" : link === "Community" ? "/community" : link === "Privacy Policy" ? "/privacy-policy" : link === "Wellness Guide" ? "/wellness-guide" : "#"} className="text-white/50 hover:text-neon-purple text-sm transition-colors">{link}</Link></li>
+                        {["Wellness Guide", "Blog", "Community", "FAQ", "Privacy Policy", "Supplier Portal"].map(link => (
+                            <li key={link}>
+                                <Link 
+                                    href={
+                                        link === "Blog" ? "/blog" : 
+                                        link === "FAQ" ? "/faq" : 
+                                        link === "Community" ? "/community" : 
+                                        link === "Privacy Policy" ? "/privacy-policy" : 
+                                        link === "Wellness Guide" ? "/wellness-guide" : 
+                                        link === "Supplier Portal" ? "/supplier/login" : 
+                                        "#"
+                                    } 
+                                    className="text-white/50 hover:text-neon-purple text-sm transition-colors"
+                                >
+                                    {link}
+                                </Link>
+                            </li>
                         ))}
                     </ul>
                 </div>

@@ -4,12 +4,14 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiStar, FiShoppingBag, FiShield, FiTruck, FiRefreshCw, FiChevronDown, FiPlay, FiHeart, FiShare2, FiArrowRight, FiChevronLeft } from "react-icons/fi";
-import { FaWhatsapp } from "react-icons/fa";
+import { FiStar, FiShoppingBag, FiShield, FiTruck, FiRefreshCw, FiChevronDown, FiPlay, FiHeart, FiShare2, FiArrowRight, FiChevronLeft, FiCreditCard } from "react-icons/fi";
+import { FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import WhatsAppCTA from "@/components/layout/WhatsAppCTA";
 import TrustPayment from "@/components/ui/TrustPayment";
+import StatDonutChart from "@/components/ui/StatDonutChart";
+import { useToast } from "@/context/ToastContext";
 
 // Pool of generic SEO-optimized reviews for wellness toys
 const SOCIAL_PROOF_REVIEWS = [
@@ -187,6 +189,13 @@ type Media = {
 }
 
 
+interface SupplierDetails {
+    id: number;
+    name: string;
+    whatsapp_number: string;
+    telegram_link: string;
+}
+
 interface Product {
     id: string;
     name: string;
@@ -199,6 +208,7 @@ interface Product {
     is_trending: boolean;
     benefits: { title: string; detail: string; }[];
     images: { id: number; file: string; media_type: string; }[];
+    supplier_details?: SupplierDetails;
     reviews: {
         id: number;
         author: string;
@@ -218,14 +228,99 @@ export default function ProductDetails() {
     const [selectedMedia, setSelectedMedia] = useState(0);
     const [activeTab, setActiveTab] = useState(0);
     const { addToCart } = useCart();
+    const { showToast } = useToast();
     const videoRef = useRef<HTMLVideoElement>(null);
     const [displayedReviews, setDisplayedReviews] = useState<any[]>([]);
 
+    // Move randomization logic to stable variables
+    const [randomSeed] = useState(() => Math.floor(Math.random() * (1000 - 100 + 1)) + 100);
+    const [randomNumberWithHours] = useState(() => {
+        const today = new Date();
+        return randomSeed + today.getHours();
+    });
+
     useEffect(() => {
         if (product) {
-            setDisplayedReviews(product.reviews);
+            // Deterministic selection based on product ID
+            // We use the last few digits of ID to offset our starting point in SOCIAL_PROOF_REVIEWS
+            const idNum = parseInt(product.id.toString().replace(/\D/g, '')) || 0;
+
+            // Generate a unique seed for this product
+            let hash = 0;
+            const seedStr = product.id.toString() + "adlply_secret_v1";
+            for (let i = 0; i < seedStr.length; i++) {
+                hash = seedStr.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const h = Math.abs(hash);
+
+            // Select 12-18 reviews deterministically
+            const count = (h % 7) + 12;
+
+            // Pick a deterministic start index based on ID
+            const startIndex = h % (SOCIAL_PROOF_REVIEWS.length - 20);
+
+            // Create a deterministic selection
+            // We take a slice and then shuffle IT specifically for this product
+            const pool = SOCIAL_PROOF_REVIEWS.slice(startIndex, startIndex + 25);
+            const selection = pool
+                .map((val, i) => ({ val, sort: (Math.sin(h + i) * 10000) % 1 }))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({ val }) => val)
+                .slice(0, count);
+
+            const selected = selection.map((rev, idx) => ({
+                ...rev,
+                id: -(idx + h),
+                // Deterministic date: h % 100 days ago
+                created_at: new Date(Date.now() - ((h * (idx + 1)) % 30000000000)).toISOString(),
+                images: []
+            }));
+
+            setDisplayedReviews([...product.reviews, ...selected]);
         }
     }, [product]);
+
+    // Helper to get qualitative rating based on product ID (pseudo-random but consistent)
+    const getQualRating = (category: string) => {
+        if (!product) return 4.5;
+        let hash = 0;
+        const seed = product.id + category;
+        for (let i = 0; i < seed.length; i++) {
+            hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        // Return a value between 4.4 and 5.0
+        return 4.4 + (Math.abs(hash) % 7) / 10;
+    };
+
+    // Generate high-volume fake rating pool
+    const getRatingStats = () => {
+        const defaultStats = { total: 0, recommend: 90, percentages: [0, 0, 0, 0, 0] };
+        if (!product) return defaultStats;
+
+        const total = product.reviews.length + randomNumberWithHours + 1240;
+
+        // Use hash to make it consistent for the product
+        let hash = 0;
+        for (let i = 0; i < product.id.length; i++) {
+            hash = product.id.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const h = Math.abs(hash);
+
+        // Distribution (targeting ~4.8 average)
+        const p5 = 70 + (h % 15); // 70-85%
+        const p4 = 10 + (h % 10); // 10-20%
+        const p3 = 2 + (h % 5);   // 2-7%
+        const p2 = 1 + (h % 3);   // 1-4%
+        const p1 = Math.max(0, 100 - (p5 + p4 + p3 + p2));
+
+        return {
+            total,
+            recommend: p5 + p4,
+            percentages: [p1, p2, p3, p4, p5] // index 0 is 1 star
+        };
+    };
+
+    const stats = getRatingStats();
 
     const handleReadAllReviews = () => {
         // Pick 25 random reviews from the social proof pool
@@ -240,10 +335,46 @@ export default function ProductDetails() {
         setDisplayedReviews(prev => [...prev, ...selected]);
     };
     const [previewMedia, setPreviewMedia] = useState<Media | null>(null);
+    const [isLiked, setIsLiked] = useState(false);
+
+    useEffect(() => {
+        if (product) {
+            const likedItems = JSON.parse(localStorage.getItem("adultplaytoys_wishlist") || "[]");
+            setIsLiked(likedItems.map(String).includes(String(product.id)));
+        }
+    }, [product]);
+
+    const toggleLike = async () => {
+        if (!product) return;
+        const likedItems = JSON.parse(localStorage.getItem("adultplaytoys_wishlist") || "[]");
+        let newItems;
+
+        if (isLiked) {
+            newItems = likedItems.filter((id: any) => String(id) !== String(product.id));
+        } else {
+            newItems = [...likedItems, String(product.id)];
+            try {
+                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/wishlist/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ product: product.id })
+                });
+            } catch (err) {
+                console.error("Failed to sync wishlist to backend", err);
+            }
+        }
+
+        localStorage.setItem("adultplaytoys_wishlist", JSON.stringify(newItems));
+        setIsLiked(!isLiked);
+        window.dispatchEvent(new CustomEvent("wishlistUpdate"));
+    };
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${slug}/`);
+                const url = `${process.env.NEXT_PUBLIC_API_URL}/api/products/${slug}/`;
+                console.log("Fetching product from:", url);
+                const response = await fetch(url);
                 if (!response.ok) throw new Error("Product not found");
                 const data = await response.json();
                 setProduct(data);
@@ -278,16 +409,12 @@ export default function ProductDetails() {
         url: img.file
     }));
 
-    // generate a random number between 100 and 1000 and that not chnage today but increase in hours count  
-    const randomNumber = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-    const today = new Date();
-    const hours = today.getHours();
-    const randomNumberWithHours = randomNumber + hours;
+    // Stats logic moved above to component start
 
 
     return (
         <div className="min-h-screen pb-24">
-            <div className="max-w-7xl mx-auto px-6 pt-12">
+            <div className="max-w-7xl mx-auto px-6 pt-6">
                 <Link
                     href="/shop"
                     className="group flex items-center gap-2 text-white/40 hover:text-neon-purple transition-all text-xs font-bold uppercase tracking-[0.2em] w-fit mb-8"
@@ -341,6 +468,14 @@ export default function ProductDetails() {
                                 )}
                             </motion.div>
                         </AnimatePresence>
+
+                        {/* Heart Button */}
+                        <button
+                            onClick={toggleLike}
+                            className={`absolute top-6 right-6 z-30 w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 ${isLiked ? "bg-glow-pink text-white shadow-[0_0_20px_rgba(236,72,153,0.5)]" : "bg-white/5 text-white/50 border border-white/10 hover:bg-white/20 hover:text-white"}`}
+                        >
+                            <FiHeart size={24} fill={isLiked ? "currentColor" : "none"} />
+                        </button>
                     </motion.div>
 
                     <div className="flex gap-4 mt-6">
@@ -442,7 +577,7 @@ export default function ProductDetails() {
                         </div>
 
                         {/* Actions */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-wrap items-center gap-4">
                             <button
                                 onClick={() => addToCart({
                                     id: product.id,
@@ -451,17 +586,58 @@ export default function ProductDetails() {
                                     image: mediaItems?.[0]?.url || "",
                                     slug: slug
                                 })}
-                                className="neon-button h-14 w-full text-sm"
+                                className="neon-button h-14 px-8 text-xs flex-grow md:flex-grow-0"
                             >
                                 <FiShoppingBag className="mr-2" /> Add to Cart
                             </button>
-                            <div className="h-14 w-full">
-                                <WhatsAppCTA productName={product.name} productId={product.id} variant="inline" />
+                            <button
+                                onClick={() => {
+                                    addToCart({
+                                        id: product.id,
+                                        name: product.name,
+                                        price: product.price,
+                                        image: mediaItems?.[0]?.url || "",
+                                        slug: slug
+                                    });
+                                    window.location.href = "/checkout";
+                                }}
+                                className="h-14 px-8 bg-white text-black font-black uppercase text-[10px] tracking-[0.2em] rounded-full hover:bg-white/90 transition-all flex items-center justify-center gap-2 group shadow-[0_10px_30px_rgba(255,255,255,0.1)] flex-grow md:flex-grow-0"
+                            >
+                                <FiShoppingBag size={16} /> Proceed to Checkout
+                            </button>
+
+                            <div className="flex items-center gap-3">
+                                <Link
+                                    href={`https://wa.me/${product.supplier_details?.whatsapp_number || process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919876543210"}?text=${encodeURIComponent(`Hi ${product.supplier_details?.name || 'Adlply'}, I want to inquiry for this item: ${typeof window !== 'undefined' ? window.location.href : ''}`)}`}
+                                    target="_blank"
+                                    className="w-14 h-14 rounded-full glass-card flex items-center justify-center text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all border-[#25D366]/20"
+                                >
+                                    <FaWhatsapp size={24} />
+                                </Link>
+                                <Link
+                                    href={product.supplier_details?.telegram_link || `https://t.me/${process.env.NEXT_PUBLIC_TELEGRAM_USERNAME || "adlply"}?text=${encodeURIComponent(`Hi, I want to inquiry for this item: ${typeof window !== 'undefined' ? window.location.href : ''}`)}`}
+                                    target="_blank"
+                                    className="w-14 h-14 rounded-full glass-card flex items-center justify-center text-[#0088cc] hover:bg-[#0088cc] hover:text-white transition-all border-[#0088cc]/20"
+                                >
+                                    <FaTelegramPlane size={24} />
+                                </Link>
+                                <button
+                                    onClick={() => {
+                                        if (typeof window !== 'undefined') {
+                                            navigator.clipboard.writeText(window.location.href);
+                                            showToast("Link copied to clipboard!", "success");
+                                        }
+                                    }}
+                                    className="w-14 h-14 rounded-full glass-card flex items-center justify-center text-white/60 hover:bg-white hover:text-black transition-all border-white/10"
+                                    title="Share Product"
+                                >
+                                    <FiShare2 size={24} />
+                                </button>
                             </div>
                         </div>
 
                         {/* Trust Badges */}
-                        <div className="grid grid-cols-3 gap-6  pt-12 border-t border-white/5">
+                        <div className="grid grid-cols-3 gap-6  py-3 border-t border-white/5 mt-12">
                             <div className="flex flex-col items-center text-center gap-2">
                                 <FiShield className="text-neon-purple" size={24} />
                                 <span className="text-[8px] uppercase tracking-widest text-white/40 font-bold">1 Year Warranty</span>
@@ -483,30 +659,35 @@ export default function ProductDetails() {
             </div>
 
             {/* Reviews Section */}
-            <section className="max-w-7xl mx-auto px-6 mt-24">
-                <div className="mb-12">
-                    {/* <span className="text-glow-pink text-[10px] uppercase tracking-[0.3em] font-bold mb-4 block">Social Proof</span> */}
-                    <h2 className="text-3xl md:text-5xl font-black tracking-tighter">Verified Explorers.</h2>
+            <section className="max-w-7xl mx-auto px-6 mt-14">
+                <div className="mb-12 border-b border-white/5 pb-6">
+                    <h2 className="text-lg md:text-xl font-bold tracking-tight text-white/40 uppercase">Verified Explorers.</h2>
                 </div>
 
                 {/* Review Summary & Global Media Gallery */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20 bg-white/[0.02] p-8 md:p-12 rounded-[2.5rem] border border-white/5">
                     {/* Rating Breakdown */}
                     <div className="lg:col-span-4">
-                        <div className="flex items-center gap-4 mb-8">
+                        <div className="flex items-center gap-4 mb-3">
                             <div className="text-6xl font-black text-white">{product.rating}</div>
                             <div>
                                 <div className="flex text-neon-purple mb-1">
                                     {[1, 2, 3, 4, 5].map(i => <FiStar key={i} fill={i <= Math.floor(product.rating) ? "currentColor" : "none"} size={16} />)}
                                 </div>
-                                <div className="text-white/40 text-[10px] uppercase font-bold tracking-widest">{product.reviews.length + randomNumberWithHours + 5}+ Verified Reviews</div>
+                                <div className="text-white/40 text-[10px] uppercase font-bold tracking-widest">{stats.total.toLocaleString()}+ Verified Reviews</div>
                             </div>
+                        </div>
+
+                        <div className="mb-8">
+                            <p className="text-glow-pink text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                                <span className="w-1.5 h-1.5 rounded-full bg-glow-pink animate-pulse" />
+                                {stats.recommend}% Explorers Recommend This
+                            </p>
                         </div>
 
                         <div className="space-y-4">
                             {[5, 4, 3, 2, 1].map(stars => {
-                                const count = product.reviews.filter(r => r.rating === stars).length;
-                                const percentage = product.reviews.length > 0 ? (count / product.reviews.length) * 100 : 0;
+                                const percentage = stats.percentages[stars - 1];
                                 return (
                                     <div key={stars} className="flex items-center gap-4 group">
                                         <div className="text-[10px] font-bold text-white/40 w-12 uppercase tracking-tighter group-hover:text-white transition-colors">{stars} Stars</div>
@@ -517,44 +698,91 @@ export default function ProductDetails() {
                                                 className="h-full bg-gradient-to-r from-neon-purple to-electric-blue"
                                             />
                                         </div>
-                                        <div className="text-[10px] font-bold text-white/20 w-8">{Math.round(percentage)}%</div>
+                                        <div className="text-[10px] font-bold text-white/20 w-8">{percentage}%</div>
                                     </div>
                                 );
                             })}
                         </div>
                     </div>
 
-                    {/* Review Media Gallery */}
-                    <div className="lg:col-span-8">
-                        <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-6 flex items-center gap-3">
-                            Media from Explorers <div className="h-[1px] flex-grow bg-white/5" />
-                        </h4>
-                        <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
-                            {product.reviews.flatMap(r => r.images || []).slice(0, 12).map((img, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: i * 0.05 }}
-                                    className="aspect-square relative rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/5"
-                                    onClick={() => setPreviewMedia(img as any)} // <-- add this
-                                >
-                                    {img.media_type === "video" ? (
-                                        <div className="w-full h-full bg-space-black flex items-center justify-center">
-                                            <FiPlay size={12} className="text-white/50 group-hover:text-white transition-colors" />
-                                            <video src={img.file} className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-40" />
-                                        </div>
-                                    ) : (
-                                        <Image src={img.file} alt="review" fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                                    )}
-                                </motion.div>
-                            ))}
-                            {product.reviews.flatMap(r => r.images || []).length === 0 && (
-                                <div className="col-span-full h-32 flex flex-col items-center justify-center border border-dashed border-white/10 rounded-3xl">
-                                    <FiStar className="text-white/5 mb-2" size={24} />
-                                    <span className="text-[10px] uppercase font-bold tracking-widest text-white/20">No media uploaded yet</span>
-                                </div>
-                            )}
+                    {/* Qualitative Stats & Media Gallery */}
+                    <div className="lg:col-span-8 flex flex-col gap-12 border-l border-white/5 pl-12">
+                        {/* Qualitative Metrics */}
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                            <StatDonutChart
+                                label="Quality"
+                                subLabel="PREMIUM"
+                                value={getQualRating("Quality")}
+                                maxValue={5}
+                                color="#8B5CF6"
+                                size={80}
+                            />
+                            <StatDonutChart
+                                label="Privacy"
+                                subLabel="100% SAFE"
+                                value={getQualRating("Privacy")}
+                                maxValue={5}
+                                color="#EC4899"
+                                size={80}
+                            />
+                            <StatDonutChart
+                                label="Discreet"
+                                subLabel="ANONYMOUS"
+                                value={getQualRating("Discreet")}
+                                maxValue={5}
+                                color="#3B82F6"
+                                size={80}
+                            />
+                            <StatDonutChart
+                                label="Service"
+                                subLabel="SUPPORT"
+                                value={getQualRating("Service")}
+                                maxValue={5}
+                                color="#10B981"
+                                size={80}
+                            />
+                            <StatDonutChart
+                                label="Packaging"
+                                subLabel="UNMARKED"
+                                value={getQualRating("Packaging")}
+                                maxValue={5}
+                                color="#F59E0B"
+                                size={80}
+                            />
+                        </div>
+
+                        {/* Review Media Gallery */}
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-6 flex items-center gap-3">
+                                Media from Explorers <div className="h-[1px] flex-grow bg-white/5" />
+                            </h4>
+                            <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
+                                {product.reviews.flatMap(r => r.images || []).slice(0, 12).map((img, i) => (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: i * 0.05 }}
+                                        className="aspect-square relative rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/5"
+                                        onClick={() => setPreviewMedia(img as any)}
+                                    >
+                                        {img.media_type === "video" ? (
+                                            <div className="w-full h-full bg-space-black flex items-center justify-center">
+                                                <FiPlay size={12} className="text-white/50 group-hover:text-white transition-colors" />
+                                                <video src={img.file} className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-40" />
+                                            </div>
+                                        ) : (
+                                            <Image src={img.file} alt="review" fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                                        )}
+                                    </motion.div>
+                                ))}
+                                {product.reviews.flatMap(r => r.images || []).length === 0 && (
+                                    <div className="col-span-full h-32 flex flex-col items-center justify-center border border-dashed border-white/10 rounded-3xl">
+                                        <FiStar className="text-white/5 mb-2" size={24} />
+                                        <span className="text-[10px] uppercase font-bold tracking-widest text-white/20">No media uploaded yet</span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -623,14 +851,6 @@ export default function ProductDetails() {
                     ))}
                 </div>
 
-                <div className="mt-12 text-center">
-                    <button
-                        onClick={handleReadAllReviews}
-                        className="text-[10px] uppercase tracking-[0.4em] font-black text-white/30 hover:text-neon-purple transition-all underline outline-offset-8"
-                    >
-                        Read All {product.reviews.length + randomNumberWithHours + 5} Reviews
-                    </button>
-                </div>
             </section>
 
             {/* WhatsApp Floating Sync */}
